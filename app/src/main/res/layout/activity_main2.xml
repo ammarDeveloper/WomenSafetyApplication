@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,188 +10,196 @@
     android:visibility="visible"
     tools:context=".MainActivity2">
 
-    <EditText
-        android:id="@+id/editName1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="304dp"
-        android:ems="8"
-        android:hint="Enter Your Name"
-        android:textColor="#000000"
-        android:textColorHint="#5E5A5A"
-        app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintHorizontal_bias="0.634"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editNum1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:hint="Phone 1"
-        android:inputType="number"
-        android:textColor="#000000"
-        android:textColorHint="#5E5A5A"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-    <EditText
-        android:id="@+id/editNum2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:hint="Phone 2"
-        android:inputType="number"
-        android:textColor="#000000"
-        android:textColorHint="#5E5A5A"
-        app:layout_constraintEnd_toEndOf="@+id/editNum1"
-        app:layout_constraintStart_toStartOf="@+id/editNum1"
-        app:layout_constraintTop_toBottomOf="@+id/editNum1" />
-
-    <EditText
-        android:id="@+id/editNum3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:hint="Phone 3"
-        android:inputType="number"
-        android:textColor="#000000"
-        android:textColorHint="#5E5A5A"
-        app:layout_constraintEnd_toEndOf="@+id/editNum2"
-        app:layout_constraintStart_toStartOf="@+id/editNum2"
-        app:layout_constraintTop_toBottomOf="@+id/editNum2" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="379dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="28dp"
-        android:fontFamily="serif"
-        android:text="----------Register----------"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="188dp"
-        android:layout_height="122dp"
-        android:layout_marginTop="28dp"
-        android:src="@mipmap/womensafetyicon"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="76dp"
-        android:background="@drawable/button_rounded"
-        android:text="Register"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_end="206dp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="223dp" />
+            <EditText
+                android:id="@+id/editName1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="8"
+                android:hint="Enter Your Name"
+                android:textColor="#000000"
+                android:textColorHint="#5E5A5A"
+                app:layout_constraintStart_toStartOf="@+id/guideline6"
+                app:layout_constraintTop_toTopOf="@+id/guideline8" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="175dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="serif"
-        android:text="Enter your close one's Numbers"
-        android:textAlignment="center"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="379dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="28dp"
+                android:fontFamily="serif"
+                android:text="----------Register----------"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="203dp"
-        android:layout_height="18dp"
-        android:text="------------------------------------------------"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.863"
-        app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="188dp"
+                android:layout_height="122dp"
+                android:layout_marginTop="28dp"
+                android:src="@mipmap/womensafetyicon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/waringText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="required*"
-        android:textColor="#FF0000"
-        android:textSize="10sp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/editName1"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editName1"
-        app:layout_constraintTop_toBottomOf="@+id/editName1" />
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="60dp"
+                android:background="@drawable/button_rounded"
+                android:text="Register"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline5" />
 
-    <TextView
-        android:id="@+id/warningText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="required*"
-        android:textColor="#FF0000"
-        android:textSize="10sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/editNum1"
-        app:layout_constraintEnd_toStartOf="@+id/editNum1"
-        app:layout_constraintTop_toTopOf="@+id/editNum1"
-        app:layout_constraintVertical_bias="1.0" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="206dp" />
 
-    <TextView
-        android:id="@+id/warningTExt3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="required*"
-        android:textColor="#FF0000"
-        android:textSize="10sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/editNum2"
-        app:layout_constraintEnd_toStartOf="@+id/editNum2"
-        app:layout_constraintTop_toTopOf="@+id/editNum2"
-        app:layout_constraintVertical_bias="1.0" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="223dp" />
 
-    <TextView
-        android:id="@+id/warningText4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="required*"
-        android:textColor="#FF0000"
-        android:textSize="10sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/editNum3"
-        app:layout_constraintEnd_toStartOf="@+id/editNum3"
-        app:layout_constraintTop_toTopOf="@+id/editNum3"
-        app:layout_constraintVertical_bias="1.0" />
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="175dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="serif"
+                android:text="Numbers Added "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.466"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="203dp"
+                android:layout_height="18dp"
+                android:text="------------------------------------------------"
+                android:textAlignment="center"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.863"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+            <TextView
+                android:id="@+id/waringText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="required*"
+                android:textColor="#FF0000"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/guideline6"
+                app:layout_constraintTop_toBottomOf="@+id/editName1" />
+
+
+            <TextView
+                android:id="@+id/warningText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="required*"
+                android:textColor="#FF0000"
+                android:textSize="10sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/guideline6"
+                app:layout_constraintTop_toBottomOf="@+id/editNum1" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="622dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="291dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="321dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="205dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/phoneRecView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/guideline5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+            <EditText
+                android:id="@+id/editNum1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:hint="Enter The Number"
+                android:inputType="number"
+                android:textColorHint="#5E5A5A"
+                app:layout_constraintStart_toStartOf="@+id/guideline6"
+                app:layout_constraintTop_toBottomOf="@+id/waringText1" />
+
+            <Button
+                android:id="@+id/addPhoneBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Add"
+                app:layout_constraintStart_toStartOf="@+id/guideline6"
+                app:layout_constraintTop_toBottomOf="@+id/warningText2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
