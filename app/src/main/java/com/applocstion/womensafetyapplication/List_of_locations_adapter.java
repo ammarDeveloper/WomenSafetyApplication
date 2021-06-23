@@ -30,8 +30,8 @@ public class List_of_locations_adapter extends RecyclerView.Adapter<List_of_loca
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.list_of_locations_address.setText(locationDateslists.get(position).getLocation().toString());
-        holder.list_of_locations_date_time.setText(locationDateslists.get(position).getDate().toString());
+        holder.list_of_locations_address.setText(locationDateslists.get(position).getLocation());
+        holder.list_of_locations_date_time.setText(locationDateslists.get(position).getDatetime());
         // TODO: get appropreate data and show it to the user
     }
 

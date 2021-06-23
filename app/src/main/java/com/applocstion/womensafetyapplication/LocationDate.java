@@ -5,27 +5,37 @@ import java.util.Date;
 
 public class LocationDate {
 
-    private Location location;
-    private Date date;
+    private int location_id;
+    private String location;
+    private String datetime;
 
-    public LocationDate(Location location, Date date) {
+    public LocationDate(int location_id, String location, String datetime) {
+        this.location_id = location_id;
         this.location = location;
-        this.date = date;
+        this.datetime = datetime;
     }
 
-    public Location getLocation() {
+    public int getLocation_id() {
+        return location_id;
+    }
+
+    public void setLocation_id(int location_id) {
+        this.location_id = location_id;
+    }
+
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDatetime() {
+        return datetime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(String datetime) {
+        this.datetime = datetime;
     }
 }

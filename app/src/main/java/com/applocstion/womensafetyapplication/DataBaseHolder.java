@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.ContactsContract;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.solver.GoalRow;
@@ -15,6 +16,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DataBaseHolder extends SQLiteOpenHelper {
 
@@ -28,7 +30,8 @@ public class DataBaseHolder extends SQLiteOpenHelper {
     // Static variables Required to store in locationsdate table
     private static final String LOCATIONS_TABLE = "LOCATIONS_TABLE";
     private static final String LOCATION_ID = "LOCATION_ID";
-    private static final String LOCATION_AND_DATE = "LOCATION_AND_DATE";
+    private static final String LOCATION = "LOCATION";
+    private static final String DATE = "DATE";
 
     // Constructor need to implement
     public DataBaseHolder(@Nullable Context context) {
@@ -41,7 +44,7 @@ public class DataBaseHolder extends SQLiteOpenHelper {
         String createTableStatement1 = "CREATE TABLE " + PERSON_TABLE + " (" + PERSON_ID + "  INTEGER PRIMARY KEY AUTOINCREMENT, " + PERSON_NAME + " TEXT, " + PHONE_NUMBERS + " LIST)";
         db.execSQL(createTableStatement1);
 
-        String createTableStatement2 = "CREATE TABLE " + LOCATIONS_TABLE + " (" + LOCATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + LOCATION_AND_DATE + " LIST)";
+        String createTableStatement2 = "CREATE TABLE " + LOCATIONS_TABLE + " (" + LOCATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + LOCATION + " TEXT, " + DATE + " TEXT)";
         db.execSQL(createTableStatement2);
     }
 
@@ -101,12 +104,14 @@ public class DataBaseHolder extends SQLiteOpenHelper {
     }
 
     // Adding the data of users locations
-    public boolean addUsersLocations(ArrayList<LocationDate> locationDatelist){
-        SQLiteDatabase db = getWritableDatabase();
+    public boolean addUsersLocations(LocationDate locationDate){
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        Gson gson = new Gson();
-        cv.put(LOCATION_AND_DATE, gson.toJson(locationDatelist));
+        cv.put(LOCATION, locationDate.getLocation());
+        System.out.println(locationDate.getLocation());
+        cv.put(DATE, locationDate.getDatetime());
+        System.out.println(locationDate.getDatetime());
 
         long insert = db.insert(LOCATIONS_TABLE, null, cv);
 
@@ -117,7 +122,36 @@ public class DataBaseHolder extends SQLiteOpenHelper {
         }
     }
 
-    // TODO: Updating the data of users locations
+    // Updating the data of users locations
+    public int updateUsersLocations(LocationDate locationDate){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
 
-    // TODO: getting the data of users Locations
+        cv.put(LOCATION, locationDate.getLocation());
+        cv.put(DATE, locationDate.getDatetime());
+
+        int update = db.update(LOCATIONS_TABLE, cv, LOCATION_ID, new String[]{String.valueOf(locationDate.getLocation_id())});
+        return update;
+
+    }
+
+    // getting the data of users Locations
+    public ArrayList<LocationDate> getUsersLocations(){
+        ArrayList<LocationDate> locationDateArrayList = new ArrayList<>();
+        String queryString = "SELECT * FROM LOCATIONS_TABLE";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+        if (cursor.moveToFirst()){
+            do{
+                int location_id = cursor.getInt(0);
+                String location = cursor.getString(1);
+                Gson gson = new Gson();
+                Type type = new TypeToken<Date>(){}.getType();
+                String datetime = cursor.getString(2);
+                LocationDate locationDate = new LocationDate(location_id, location, datetime);
+                locationDateArrayList.add(locationDate);
+            }while (cursor.moveToNext());
+        }
+        return locationDateArrayList;
+    }
 }
