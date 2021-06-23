@@ -13,17 +13,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    public static String userName = "";
-    public static String num1 = "";
-    public static String num2 = "";
-    public static String num4 = "";
-
     private Timer timer;
 
     @Override
@@ -31,15 +26,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         timer = new Timer();
+        DataBaseHolder dataBaseHolder = new DataBaseHolder(this);
 
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
-                startActivity(intent);
-                finish();
+                if(dataBaseHolder.getData().isEmpty()){
+                    Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                    startActivity(intent);
+                    finish();
+                }else{
+                    Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
-        }, 2000);
+        }, 1000);
     }
 
 }

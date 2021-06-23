@@ -1,84 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="10dp"
+    app:cardElevation="-1dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/displayR">
 
-            <TextView
-                android:id="@+id/numtext"
-                android:layout_width="160dp"
-                android:layout_height="wrap_content"
-                android:text="Text View"
-                android:textColor="@color/black"
-                android:textSize="20dp"
-                android:ems="10"
-                android:fontFamily="@font/numans"/>
-
-            <ImageView
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/deleteBtn"
-                android:layout_marginEnd="15dp"
-                android:src="@drawable/ic_action_edit"
-                android:id="@+id/editBtn"
-                android:layout_marginTop="0dp"/>
+                android:id="@+id/relForNumAndEditBtn"
+                android:visibility="gone">
 
-            <ImageView
+                <TextView
+                    android:id="@+id/numtext"
+                    android:layout_width="160dp"
+                    android:layout_height="wrap_content"
+                    android:text="Text View"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:ems="10"
+                    android:padding="10dp"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/numans"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:id="@+id/editBtn"
+                    android:layout_toLeftOf="@+id/deleteBtn"
+                    android:layout_marginTop="0dp"
+                    app:cardCornerRadius="20dp"
+                    android:layout_centerVertical="true"
+                    app:cardElevation="-1dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_action_edit"
+                        android:padding="10dp"
+                        android:background="@color/white"/>
+
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="0dp"
+                    android:id="@+id/deleteBtn"
+                    app:cardCornerRadius="20dp"
+                    android:layout_centerVertical="true"
+                    app:cardElevation="-1dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/ic_action_delete"
+                        android:padding="10dp"
+                        android:background="@color/white"/>
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/ic_action_delete"
-                android:id="@+id/deleteBtn"
-                android:layout_marginTop="0dp"/>
+                android:layout_toRightOf="@+id/relForNumAndEditBtn"
+                android:id="@+id/expandR"
+                android:visibility="visible">
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter the Number"
+                    android:padding="10dp"
+                    android:ems="10"
+                    android:layout_centerVertical="true"
+                    android:inputType="number"
+                    android:id="@+id/editedText"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/editedText"
+                    android:id="@+id/saveExpaned"
+                    app:cardCornerRadius="20dp"
+                    android:layout_centerVertical="true"
+                    app:cardElevation="-1dp">
+
+                    <ImageView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_action_save"
+                        android:padding="10dp"
+                        android:background="@color/white"/>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/saveExpaned"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="10dp"
+                    app:cardElevation="-1dp"
+                    app:cardCornerRadius="20dp"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/editNumCancelBtn">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_action_cancel"
+                        android:background="@color/white"
+                        android:padding="10dp"/>
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Text View"
+                    android:layout_below="@id/editedText"
+                    android:id="@+id/errorText"
+                    android:visibility="gone"
+                    android:textColor="#FF0303"/>
+
+
+            </RelativeLayout>
         </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/displayR"
-            android:id="@+id/expandR"
-            android:visibility="visible">
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Enter the Number"
-                android:inputType="number"
-                android:id="@+id/editedText"/>
-
-            <ImageView
-                android:id="@+id/saveExpaned"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/editedText"
-                android:src="@drawable/ic_action_save" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Text View"
-                android:layout_below="@id/editedText"
-                android:id="@+id/errorText"
-                android:visibility="gone"
-                android:textColor="#FF0303"/>
-
-
-        </RelativeLayout>
-
-
     </RelativeLayout>
 
 

@@ -28,7 +28,7 @@ public class Phone_numbers {
         this.id = id;
     }
 
-    public String getPhone_numbers() {
+    public String getPhone_number() {
         return phone_numbers;
     }
 

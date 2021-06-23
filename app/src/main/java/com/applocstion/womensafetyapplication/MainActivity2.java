@@ -1,6 +1,9 @@
 package com.applocstion.womensafetyapplication;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.solver.GoalRow;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,16 +14,23 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -28,29 +38,31 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity2 extends AppCompatActivity {
 
-    public static String userNameIn2, num1In2, num2In2, num3In2;
     private String TAG;
     private Button btnRegister, addBtn;
     private EditText editUserName, editPhone1;
     private TextView textWarning1, textwarning2;
     private RecyclerView recyclerView;
     private NumRecAdapter adapter;
-    private ArrayList<Phone_numbers> phone_numbers_list = new ArrayList<>();
+    private ArrayList<Phone_numbers> phone_numbers_list;
     private ConstraintLayout constraintLayout;
     private PersonsId personsId;
-    private DataBaseHolder dataBaseHolder;
-
+    public static DataBaseHolder dataBaseHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.SEND_SMS, Manifest.permission.INTERNET}, PackageManager.PERMISSION_GRANTED);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SEND_SMS, Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE}, PackageManager.PERMISSION_GRANTED);
 
 
 
@@ -62,13 +74,13 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (phoneValidates()){
-                    textwarning2.setVisibility(View.GONE);
                     Phone_numbers phone_numbers = new Phone_numbers(-1, editPhone1.getText().toString());
                     phone_numbers_list.add(phone_numbers);
-//                PersonsId personsId = new PersonsId(phone_numbers.getId(), editUserName.getText().toString(), phone_numbers);
                     adapter.setPhoneNum(phone_numbers_list);
                     recyclerView.setAdapter(adapter);
                     recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity2.this));
+                    editPhone1.setText("");
+                    textwarning2.setVisibility(View.GONE);
                 }else if(emptyPhone()){
                     textwarning2.setText("Section Empty");
                     textwarning2.setVisibility(View.VISIBLE);
@@ -85,10 +97,20 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 initRegister();
+
             }
         });
 
-
+        if(savedInstanceState != null){
+            editUserName.setText(savedInstanceState.getString("PERSON_NAME"));
+            editPhone1.setText(savedInstanceState.getString("SINGLE_NUMBER"));
+            Gson gson = new Gson();
+            Type type = new TypeToken<ArrayList<Phone_numbers>>(){}.getType();
+            phone_numbers_list = gson.fromJson(savedInstanceState.getString("NUMBERS"), type);
+            adapter.setPhoneNum(phone_numbers_list);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity2.this));
+        }
     }
 
     // initializing the view elements of our activity
@@ -103,20 +125,21 @@ public class MainActivity2 extends AppCompatActivity {
         recyclerView = findViewById(R.id.phoneRecView);
         adapter = new NumRecAdapter(MainActivity2.this);
         constraintLayout = findViewById(R.id.parent);
+        phone_numbers_list = new ArrayList<>();
+        dataBaseHolder = new DataBaseHolder(this);
     }
 
     // initializing the Registration
     private void initRegister() {
         Log.d(TAG, "initRegister: started");
-
         if (validatesData()) {
-            textWarning1.setVisibility(View.GONE);
             personsId = new PersonsId(-1, editUserName.getText().toString(), phone_numbers_list);
-            dataBaseHolder = new DataBaseHolder(this);
             boolean b = dataBaseHolder.addData(personsId);
             if (b){
+                restMainActivity();
                 Intent intent = new Intent(this, MapsActivity.class);
                 startActivity(intent);
+                finish();
             }
         }
     }
@@ -145,7 +168,7 @@ public class MainActivity2 extends AppCompatActivity {
             count = count + 1;
         }
 
-        if (count == 2){
+        if (count > 0){
             return false;
         }
         return true;
@@ -169,4 +192,23 @@ public class MainActivity2 extends AppCompatActivity {
         return true;
     }
 
+    // Rests main activity
+    public void restMainActivity(){
+        textWarning1.setVisibility(View.GONE);
+        textwarning2.setVisibility(View.GONE);
+        editUserName.setText("");
+        editPhone1.setText("");
+    }
+
+
+    // Saving the instance for change in the view
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("PERSON_NAME", editUserName.toString());
+        outState.putString("SINGLE_NUMBER", editPhone1.toString());
+        Gson gson = new Gson();
+        outState.putString("NUMBERS", gson.toJson(phone_numbers_list));
+    }
 }

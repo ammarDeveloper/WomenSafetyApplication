@@ -1,6 +1,8 @@
 package com.applocstion.womensafetyapplication;
 
+import android.animation.Animator;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -16,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
@@ -41,14 +45,29 @@ public class NumRecAdapter extends RecyclerView.Adapter<NumRecAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.text1.setText(phoneNum.get(position).getPhone_numbers().toString());
+        holder.text1.setText(phoneNum.get(position).getPhone_number().toString());
 
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                phoneNum.remove(phoneNum.get(position));
-                setPhoneNum(phoneNum);
-                notifyDataSetChanged();
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                builder.setMessage("Are You Sure?\nYou Want To Delete "+phoneNum.get(position).getPhone_number());
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        phoneNum.remove(phoneNum.get(position));
+                        setPhoneNum(phoneNum);
+                        notifyDataSetChanged();
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.create();
+                builder.show();
             }
         });
 
@@ -57,10 +76,27 @@ public class NumRecAdapter extends RecyclerView.Adapter<NumRecAdapter.ViewHolder
             public void onClick(View v) {
                 if(holder.phoneValidates()){
                     holder.errorText.setVisibility(View.GONE);
-                    int id = phoneNum.get(position).getId();
-                    phoneNum.set(position, new Phone_numbers(id, holder.editText.getText().toString()));
-                    setPhoneNum(phoneNum);
-                    notifyDataSetChanged();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setMessage("Change "+ phoneNum.get(position).getPhone_number()+ " To "+ holder.editText.getText().toString()+" ?");
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            int id = phoneNum.get(position).getId();
+                            phoneNum.set(position, new Phone_numbers(id, holder.editText.getText().toString()));
+                            setPhoneNum(phoneNum);
+                            holder.editText.getText().clear();
+                            notifyDataSetChanged();
+                        }
+                    });
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    builder.create();
+                    builder.show();
+
                 }else if(holder.emptyPhone()){
                     holder.errorText.setText("Section Empty");
                     holder.errorText.setVisibility(View.VISIBLE);
@@ -72,10 +108,13 @@ public class NumRecAdapter extends RecyclerView.Adapter<NumRecAdapter.ViewHolder
             }
         });
 
+
         if (phoneNum.get(position).isExpanded()){
             holder.expandedRelativeLayout.setVisibility(View.VISIBLE);
+            holder.relForNumAndEditBtn.setVisibility(View.GONE);
         }else {
             holder.expandedRelativeLayout.setVisibility(View.GONE);
+            holder.relForNumAndEditBtn.setVisibility(View.VISIBLE);
         }
     }
 
@@ -98,22 +137,36 @@ public class NumRecAdapter extends RecyclerView.Adapter<NumRecAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView text1, errorText;
-        private ImageView editBtn, deleteBtn, saveBtn;
+        private CardView editBtn, deleteBtn, saveBtn;
         private EditText editText;
         private RelativeLayout expandedRelativeLayout;
+        private RelativeLayout relForNumAndEditBtn;
+        private CardView editNumCancelBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            text1 = itemView.findViewById(R.id.numtext);
-            editBtn = itemView.findViewById(R.id.editBtn);
-            deleteBtn = itemView.findViewById(R.id.deleteBtn);
-            editText = itemView.findViewById(R.id.editedText);
-            saveBtn = itemView.findViewById(R.id.saveExpaned);
-            expandedRelativeLayout = itemView.findViewById(R.id.expandR);
-            errorText = itemView.findViewById(R.id.errorText);
+            initViews();
 
+
+            // click listerner for editBtn
             editBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for (int i=0; i<phoneNum.size(); i++){
+                        if (i == getAdapterPosition()){
+                            phoneNum.get(i).setExpanded(true);
+                            editText.setText(phoneNum.get(i).getPhone_number());
+                        }else {
+                            phoneNum.get(i).setExpanded(false);
+                        }
+                    }
+                    notifyDataSetChanged();
+                }
+            });
+
+            // Click listener for cancel editing section
+            editNumCancelBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     phoneNum.get(getAdapterPosition()).setExpanded(!phoneNum.get(getAdapterPosition()).isExpanded());
@@ -138,5 +191,20 @@ public class NumRecAdapter extends RecyclerView.Adapter<NumRecAdapter.ViewHolder
             }
             return true;
         }
+
+        // initializing the views
+        public void initViews(){
+            text1 = itemView.findViewById(R.id.numtext);
+            editBtn = itemView.findViewById(R.id.editBtn);
+            deleteBtn = itemView.findViewById(R.id.deleteBtn);
+            editText = itemView.findViewById(R.id.editedText);
+            saveBtn = itemView.findViewById(R.id.saveExpaned);
+            expandedRelativeLayout = itemView.findViewById(R.id.expandR);
+            errorText = itemView.findViewById(R.id.errorText);
+            relForNumAndEditBtn = itemView.findViewById(R.id.relForNumAndEditBtn);
+            editNumCancelBtn = itemView.findViewById(R.id.editNumCancelBtn);
+        }
     }
+
+
 }

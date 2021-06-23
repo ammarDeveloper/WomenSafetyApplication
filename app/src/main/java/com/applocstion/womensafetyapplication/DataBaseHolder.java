@@ -17,11 +17,19 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class DataBaseHolder extends SQLiteOpenHelper {
-    // Static variables of Required data
+
+    // Static variables of Required storing in persons id tabel
     public static final String PERSON_TABLE = "PERSON_TABLE";
     public static final String PERSON_ID = "PERSON_ID";
     public static final String PERSON_NAME = "PERSON_NAME";
     public static final String PHONE_NUMBERS = "PHONE_NUMBERS";
+
+
+    // Static variables Required to store in locationsdate table
+    private static final String LOCATIONS_TABLE = "LOCATIONS_TABLE";
+    private static final String LOCATION_ID = "LOCATION_ID";
+    private static final String LOCATION_AND_DATE = "LOCATION_AND_DATE";
+
     // Constructor need to implement
     public DataBaseHolder(@Nullable Context context) {
         super(context, "person_id", null, 1);
@@ -30,8 +38,11 @@ public class DataBaseHolder extends SQLiteOpenHelper {
     // method which is called when the data is stored for the first time
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableStatement = "CREATE TABLE " + PERSON_TABLE + " (" + PERSON_ID + "  INTEGER PRIMARY KEY AUTOINCREMENT, " + PERSON_NAME + " TEXT, " + PHONE_NUMBERS + " LIST)";
-        db.execSQL(createTableStatement);
+        String createTableStatement1 = "CREATE TABLE " + PERSON_TABLE + " (" + PERSON_ID + "  INTEGER PRIMARY KEY AUTOINCREMENT, " + PERSON_NAME + " TEXT, " + PHONE_NUMBERS + " LIST)";
+        db.execSQL(createTableStatement1);
+
+        String createTableStatement2 = "CREATE TABLE " + LOCATIONS_TABLE + " (" + LOCATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + LOCATION_AND_DATE + " LIST)";
+        db.execSQL(createTableStatement2);
     }
 
     // Method which is called when the data is upgraded in future
@@ -40,7 +51,7 @@ public class DataBaseHolder extends SQLiteOpenHelper {
 
     }
 
-    // Adding the data
+    // Adding the data of persons id
     public boolean addData(PersonsId person){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -57,7 +68,7 @@ public class DataBaseHolder extends SQLiteOpenHelper {
         }
     }
 
-    // Getting the data
+    // Getting the data of persons id
     public ArrayList<PersonsId> getData(){
         ArrayList<PersonsId> dataList = new ArrayList<>();
         String queryString = "SELECT * FROM PERSON_TABLE";
@@ -77,4 +88,36 @@ public class DataBaseHolder extends SQLiteOpenHelper {
         return dataList;
     }
 
+    // Updating the data of persons id
+    public int updateData(PersonsId personsId){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(PERSON_NAME, personsId.getName());
+        Gson gson = new Gson();
+        cv.put(PHONE_NUMBERS, gson.toJson(personsId.getPhone_numbers()));
+        int update = db.update(PERSON_TABLE, cv, PERSON_ID + "=?", new String[]{String.valueOf(personsId.getId())});
+        return update;
+    }
+
+    // Adding the data of users locations
+    public boolean addUsersLocations(ArrayList<LocationDate> locationDatelist){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        Gson gson = new Gson();
+        cv.put(LOCATION_AND_DATE, gson.toJson(locationDatelist));
+
+        long insert = db.insert(LOCATIONS_TABLE, null, cv);
+
+        if (insert == -1){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // TODO: Updating the data of users locations
+
+    // TODO: getting the data of users Locations
 }

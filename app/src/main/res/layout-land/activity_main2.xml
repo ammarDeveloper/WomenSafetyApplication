@@ -35,31 +35,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:hint="Phone 1"
+                android:inputType="number"
                 android:textColor="#000000"
                 android:textColorHint="#5E5A5A"
                 app:layout_constraintStart_toStartOf="@+id/guideline10"
                 app:layout_constraintTop_toBottomOf="@+id/waringText1" />
 
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="386dp"
-                android:layout_height="34dp"
-                android:layout_marginTop="68dp"
-                android:fontFamily="serif"
-                android:text="----------Register----------"
-                android:textAlignment="center"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline3"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="188dp"
-                android:layout_height="122dp"
-                android:layout_marginStart="88dp"
+                android:layout_width="88dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="32dp"
                 android:src="@mipmap/womensafetyicon"
                 app:layout_constraintStart_toStartOf="parent"
@@ -79,39 +65,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_end="327dp" />
+                app:layout_constraintGuide_end="402dp" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="117dp" />
-
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="326dp"
-                android:layout_height="31dp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="serif"
-                android:text="Enter your close one's Numbers"
-                android:textAlignment="center"
-                android:textColor="#000000"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline3"
-                app:layout_constraintTop_toTopOf="@+id/guideline4" />
-
-            <TextView
-                android:id="@+id/textView10"
-                android:layout_width="315dp"
-                android:layout_height="21dp"
-                android:layout_marginTop="4dp"
-                android:text="------------------------------------------------"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/guideline3"
-                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                app:layout_constraintGuide_begin="32dp" />
 
             <TextView
                 android:id="@+id/waringText1"
@@ -154,21 +115,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="181dp" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="230dp" />
+                app:layout_constraintGuide_begin="112dp" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="494dp" />
+                app:layout_constraintGuide_begin="699dp" />
 
             <Button
                 android:id="@+id/addPhoneBtn"
@@ -184,10 +138,12 @@
                 android:id="@+id/phoneRecView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:background="#DDDDDD"
+                app:layout_constraintBottom_toTopOf="@+id/guideline2"
+                app:layout_constraintEnd_toStartOf="@+id/guideline14"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/guideline3"
-                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+                app:layout_constraintTop_toTopOf="@+id/guideline4" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
