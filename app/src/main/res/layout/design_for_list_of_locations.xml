@@ -8,6 +8,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="0dp"
+        android:id="@+id/card_of_saved_locations"
         android:layout_height="wrap_content"
         app:cardElevation="-1dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,11 +24,10 @@
                 android:id="@+id/list_of_locations_address"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ems="10"
+                android:ems="15"
                 android:padding="10dp"
                 android:text="addresss"
                 android:textColor="@color/black"
-                android:textSize="20dp"
                 android:textStyle="italic"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +40,6 @@
                 android:ems="5"
                 android:padding="10dp"
                 android:text="Date and time"
-                android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

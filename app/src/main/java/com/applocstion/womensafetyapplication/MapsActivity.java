@@ -14,6 +14,7 @@ import androidx.transition.TransitionManager;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -365,13 +366,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        // click last ten locations
+        // click to show last ten locations
         last_ten_location_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: displaying last 10 locations
-                DataBaseHolder dataBaseHolder = new DataBaseHolder(MapsActivity.this);
-                Toast.makeText(MapsActivity.this, dataBaseHolder.getUsersLocations().get(0).getLocation(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MapsActivity.this, List_of_locations.class);
+                startActivity(intent);
             }
         });
 
@@ -379,16 +379,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         add_to_saved_location_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: adding to the saved locations
                 Date date = new Date();
                 String datetime = DateFormat.getDateTimeInstance().format(date);
                 LocationDate locationDate = new LocationDate(-1, lineAddress, datetime);
                 DataBaseHolder dataBaseHolder = new DataBaseHolder(MapsActivity.this);
                 boolean A = dataBaseHolder.addUsersLocations(locationDate);
                 if (A){
-                    Toast.makeText(MapsActivity.this, "yes", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MapsActivity.this, "Location Added", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(MapsActivity.this, "no", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MapsActivity.this, "Something Went Wrong, Try Again", Toast.LENGTH_SHORT).show();
                 }
 
             }

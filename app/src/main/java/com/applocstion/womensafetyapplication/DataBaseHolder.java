@@ -145,8 +145,6 @@ public class DataBaseHolder extends SQLiteOpenHelper {
             do{
                 int location_id = cursor.getInt(0);
                 String location = cursor.getString(1);
-                Gson gson = new Gson();
-                Type type = new TypeToken<Date>(){}.getType();
                 String datetime = cursor.getString(2);
                 LocationDate locationDate = new LocationDate(location_id, location, datetime);
                 locationDateArrayList.add(locationDate);
