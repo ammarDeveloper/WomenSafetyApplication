@@ -1,6 +1,7 @@
 package com.applocstion.womensafetyapplication;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -12,19 +13,26 @@ import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.hardware.Camera;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.Gravity;
@@ -32,6 +40,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +64,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,11 +74,14 @@ import java.util.Date;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private static final String TAG = "MapsActivity";
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    double log, lat;
+
     private GoogleMap mMap;
     public static final int PERMISSIONS_SEND_MESSAGE = 98;
     private static final int PERMISSIONS_FINE_LOCATION = 99;
     private LatLng latLng;
-    private CardView cardViewConnect, cardViewEdit, cardExpand, cardCancel, CancelNameEditFOrCard, SaveBtnForNameInCard, imageBtnForEditingName, errorMessageCard, relocateCardBtn, list_of_settings, editing_side_bar, editingPageNameIconCardView, last_ten_location_card, add_to_saved_location_card, edit_saved_details_card_view, my_location_card_view, settings_card_view, about_card_view, my_location_container_card_view;
+    private CardView cardViewConnect, cardViewEdit, cardExpand, cardCancel, CancelNameEditFOrCard, SaveBtnForNameInCard, imageBtnForEditingName, errorMessageCard, relocateCardBtn, list_of_settings, editing_side_bar, editingPageNameIconCardView, last_ten_location_card, add_to_saved_location_card, edit_saved_details_card_view, my_location_card_view, settings_card_view, about_card_view, my_location_container_card_view, send_WA_message_card;
     private TextView cardWarningNumber, cardWarningName, cardTextName, my_location_body;
     private RelativeLayout cardTextNameHide, relForNameAndEditBtn;
     private String userName, lineAddress;
@@ -76,6 +91,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Button addToCardNum, saveBtn;
     private ConstraintLayout parent;
     private EditText cardEditNumber, cardEditName;
+
+    private static final int PERMISSION_CAMERA = 100;
 
     //Location Request is a config file for all Settings related to FusedLocationProvider
     private LocationRequest locationRequest;
@@ -166,6 +183,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         callBackRelocation();
     }
 
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -182,6 +201,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                                 }
                             });
+                    snackbar.show();
                 }
                 break;
             case PERMISSIONS_SEND_MESSAGE:
@@ -196,6 +216,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                                 }
                             });
+                    snackbar.show();
                 }
                 break;
             default:
@@ -203,6 +224,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            String BitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(), imageBitmap, "title", null);
+            Uri uri = Uri.parse(BitmapPath);
+            sendWAMessage(uri);
+
+        }
+    }
+
+
 
     // UI elements
     public void UIElements() {
@@ -282,7 +318,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        // Connects to the people
+        // Button to send text message
         cardViewConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -295,6 +331,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         requestPermissions(new String[]{Manifest.permission.SEND_SMS}, PERMISSIONS_SEND_MESSAGE);
+                    }
+                }
+            }
+        });
+
+        // Button to send images on whatsapp
+        send_WA_message_card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callBackRelocation();
+                DataBaseHolder dataBaseHolder = new DataBaseHolder(MapsActivity.this);
+                userName = dataBaseHolder.getData().get(0).getName();
+                Phone_numbers = dataBaseHolder.getData().get(0).getPhone_numbers();
+                if(checkCameraHardware(MapsActivity.this)){
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    try{
+                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+
+                    }catch (Exception e){
+                        Toast.makeText(MapsActivity.this, "Something went wrong, Your Android version doesn't support this feature", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -418,7 +474,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         settings_card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: adding a settings slot
+                Intent intent = new Intent(MapsActivity.this, SettingsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -466,6 +523,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         about_card_view = findViewById(R.id.about_card_view);
         my_location_body = findViewById(R.id.My_location_body);
         my_location_container_card_view = findViewById(R.id.my_location_container_card_view);
+        send_WA_message_card = findViewById(R.id.send_WA_messag_card);
     }
 
     // updating the gps
@@ -489,6 +547,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void updateLocation(Location location) {
         try {
             latLng = new LatLng(location.getLatitude(), location.getLongitude());
+            log = location.getLongitude();
+            lat = location.getLatitude();
             UIElements();
             checkNetwork();
             Transition transition = new Slide(Gravity.TOP);
@@ -519,12 +579,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     // Sending messages
     public void sendMessage() {
-        String message = "Hi this is " + userName + " i am at \n" + lineAddress + "\n I AM IN EMERGENCY RIGHT NOW PLEASE TRY TO HELP ME! ";
+        String locationlink = "http://maps.google.com/maps?saddr="+lat+","+log;
+        String message = "Hi this is " + userName + " check out my location below,  i am at " + lineAddress+" From women safety app with map";
         SmsManager smsManager = SmsManager.getDefault();
         ArrayList<String> listOfMessages = smsManager.divideMessage(message);
         for (Phone_numbers s : Phone_numbers) {
             smsManager.sendMultipartTextMessage(s.getPhone_number(), null, listOfMessages, null, null);
+            smsManager.sendTextMessage(s.getPhone_number(), null, locationlink, null, null);
         }
+    }
+
+    // sending messages on whatapp
+    private void sendWAMessage(Uri uri) {
+        String locationlink = "http://maps.google.com/maps?saddr="+lat+","+log+" check out my location, i am at "+lineAddress+" From women safety app with map";
+        sendMessage();
+        Intent whatsappintent = new Intent(Intent.ACTION_SEND);
+        whatsappintent.setPackage("com.whatsapp");
+        if(isAppInstalled(whatsappintent.getPackage())){
+            whatsappintent.putExtra(Intent.EXTRA_TEXT, locationlink);
+            whatsappintent.setType("text/plain");
+            whatsappintent.putExtra(Intent.EXTRA_STREAM, uri);
+            whatsappintent.setType("image/*");
+            startActivity(whatsappintent);
+            Toast.makeText(this, "message sent", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "WhatsApp is not installed", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     // initializing the Update
@@ -592,7 +673,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     // Card Expanding
     public void expandCard() {
-
         Transition transition = new Slide(Gravity.TOP);
         transition.setDuration(300);
         transition.addTarget(R.id.cardExpand);
@@ -701,4 +781,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         editing_side_bar.setVisibility(View.GONE);
         enableBackGround();
     }
+
+    // checking if the mobile has the camera
+    public boolean checkCameraHardware(Context context){
+        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    // checking if whatsapp is installed or not
+    private boolean isAppInstalled(String packageName) {
+        PackageManager pm = getPackageManager();
+        boolean app_installed;
+        try {
+            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            app_installed = true;
+        }
+        catch (PackageManager.NameNotFoundException e) {
+            app_installed = false;
+        }
+        return app_installed;
+    }
+
 }

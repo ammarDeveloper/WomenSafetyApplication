@@ -17,6 +17,8 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -46,6 +48,7 @@ import java.util.ArrayList;
 
 public class MainActivity2 extends AppCompatActivity {
 
+    private static final String ACCESSIBILITY_SERVICE_NAME = "com.whatsapp";
     private String TAG;
     private Button btnRegister, addBtn;
     private EditText editUserName, editPhone1;
@@ -62,11 +65,12 @@ public class MainActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
 
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SEND_SMS, Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE}, PackageManager.PERMISSION_GRANTED);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.SEND_SMS, Manifest.permission.INTERNET, Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.CAMERA}, PackageManager.PERMISSION_GRANTED);
 
 
 
         initView();  // initializing the views in the function
+
 
 
         // Use to add the number in the list of numbers
@@ -199,6 +203,7 @@ public class MainActivity2 extends AppCompatActivity {
         editUserName.setText("");
         editPhone1.setText("");
     }
+
 
 
     // Saving the instance for change in the view
