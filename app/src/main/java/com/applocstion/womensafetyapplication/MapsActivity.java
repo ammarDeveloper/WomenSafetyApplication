@@ -81,14 +81,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static final int PERMISSIONS_SEND_MESSAGE = 98;
     private static final int PERMISSIONS_FINE_LOCATION = 99;
     private LatLng latLng;
-    private CardView cardViewConnect, cardViewEdit, cardExpand, cardCancel, CancelNameEditFOrCard, SaveBtnForNameInCard, imageBtnForEditingName, errorMessageCard, relocateCardBtn, list_of_settings, editing_side_bar, editingPageNameIconCardView, last_ten_location_card, add_to_saved_location_card, edit_saved_details_card_view, my_location_card_view, settings_card_view, about_card_view, my_location_container_card_view, send_WA_message_card;
+    private CardView cardViewConnect, cardViewEdit, cardExpand, addToCardNum, cardCancel,saveBtn, CancelNameEditFOrCard, SaveBtnForNameInCard, imageBtnForEditingName, errorMessageCard, relocateCardBtn, list_of_settings, editing_side_bar, editingPageNameIconCardView, last_ten_location_card, add_to_saved_location_card, edit_saved_details_card_view, my_location_card_view, settings_card_view, about_card_view, my_location_container_card_view, send_WA_message_card;
     private TextView cardWarningNumber, cardWarningName, cardTextName, my_location_body;
     private RelativeLayout cardTextNameHide, relForNameAndEditBtn;
     private String userName, lineAddress;
     private ArrayList<Phone_numbers> Phone_numbers, phone_numbers_list;
     private RecyclerView cardRecyclerView;
     private NumRecAdapter adapter;
-    private Button addToCardNum, saveBtn;
     private ConstraintLayout parent;
     private EditText cardEditNumber, cardEditName;
 
@@ -383,6 +382,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     enableBackGround();
                 } else{
                     close_my_loction();
+                    enableBackGround();
                 }
             }
         });
@@ -391,9 +391,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(@NonNull Marker marker) {
-                callBackRelocation();
                 show_my_location();
                 my_location_body.setText(lineAddress);
+                disableBackGround();
                 return false;
             }
         });
@@ -463,10 +463,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         my_location_card_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callBackRelocation();
                 editing_side_bar.setVisibility(View.GONE);
                 show_my_location();
                 my_location_body.setText(lineAddress);
+                disableBackGround();
             }
         });
 
@@ -592,7 +592,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     // sending messages on whatapp
     private void sendWAMessage(Uri uri) {
         String locationlink = "http://maps.google.com/maps?saddr="+lat+","+log+" check out my location, i am at "+lineAddress+" From women safety app with map";
-        sendMessage();
+//        sendMessage();
         Intent whatsappintent = new Intent(Intent.ACTION_SEND);
         whatsappintent.setPackage("com.whatsapp");
         if(isAppInstalled(whatsappintent.getPackage())){
@@ -731,6 +731,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         cardViewEdit.setEnabled(true);
         relocateCardBtn.setEnabled(true);
         list_of_settings.setEnabled(true);
+        send_WA_message_card.setEnabled(true);
     }
 
     // disabling the buttons
@@ -740,6 +741,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         cardViewEdit.setEnabled(false);
         relocateCardBtn.setEnabled(false);
         list_of_settings.setEnabled(false);
+        send_WA_message_card.setEnabled(false);
     }
 
     // show my location
@@ -749,7 +751,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         transition.addTarget(R.id.my_location_container_card_view);
         TransitionManager.beginDelayedTransition(parent, transition);
         my_location_container_card_view.setVisibility(View.VISIBLE);
-        disableBackGround();
     }
 
     // close my location
@@ -759,7 +760,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         transition.addTarget(R.id.my_location_container_card_view);
         TransitionManager.beginDelayedTransition(parent, transition);
         my_location_container_card_view.setVisibility(View.GONE);
-        enableBackGround();
     }
 
     // opening edit slide bar

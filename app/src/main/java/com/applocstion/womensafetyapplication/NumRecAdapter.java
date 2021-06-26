@@ -87,6 +87,7 @@ public class NumRecAdapter extends RecyclerView.Adapter<NumRecAdapter.ViewHolder
                             holder.editText.getText().clear();
                             notifyDataSetChanged();
                         }
+
                     });
                     builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
                         @Override

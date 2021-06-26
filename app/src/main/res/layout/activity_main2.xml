@@ -4,153 +4,370 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EAEAEA"
     android:outlineAmbientShadowColor="#18EA00"
     android:textAlignment="center"
     android:visibility="visible"
-    tools:context=".MainActivity2">
+    tools:context=".MainActivity2"
+    android:id="@+id/relativeParent">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/parent"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#4DFF00">
 
-            <EditText
-                android:id="@+id/editName1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="8"
-                android:hint="Enter Your Name"
-                android:textColor="#000000"
-                android:textColorHint="#5E5A5A"
-                app:layout_constraintStart_toStartOf="@+id/guideline6"
-                app:layout_constraintTop_toTopOf="@+id/guideline8" />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="188dp"
-                android:layout_height="122dp"
-                android:layout_marginTop="28dp"
-                android:src="@mipmap/womensafetyicon"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/button"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="60dp"
-                android:background="@drawable/button_rounded"
-                android:text="Register"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline5" />
+                android:background="#4DFF00">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_end="16dp" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="28dp"
+                    android:src="@mipmap/womensafetyicon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="20dp"/>
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="223dp" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/waringText1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="required*"
-                android:textColor="#FF0000"
-                android:textSize="10sp"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/guideline6"
-                app:layout_constraintTop_toBottomOf="@+id/editName1" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ovel_back_ground">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="REGISTER"
+                    android:textSize="20dp"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="60dp"/>
 
 
-            <TextView
-                android:id="@+id/warningText2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="required*"
-                android:textColor="#FF0000"
-                android:textSize="10sp"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="@+id/guideline6"
-                app:layout_constraintTop_toBottomOf="@+id/editNum1" />
+                <EditText
+                    android:layout_below="@+id/title"
+                    android:id="@+id/editName1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Enter Your Name"
+                    android:textSize="15dp"
+                    android:padding="15dp"
+                    android:textColor="#000000"
+                    android:textColorHint="#5E5A5A"
+                    android:background="@drawable/stokes_for_edit_text"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"/>
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="622dp" />
+                <TextView
+                    android:id="@+id/waringText1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="required*"
+                    android:textColor="#FF0000"
+                    android:textSize="10sp"
+                    android:visibility="gone"
+                    android:layout_below="@+id/editName1"
+                    android:layout_marginStart="30dp"/>
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="16dp" />
+                <EditText
+                    android:id="@+id/editNum1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:hint="Enter The Few Numbers"
+                    android:textSize="15dp"
+                    android:padding="15dp"
+                    android:background="@drawable/stokes_for_edit_text"
+                    android:inputType="number"
+                    android:textColorHint="#5E5A5A"
+                    android:layout_below="@+id/waringText1"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"/>
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="342dp" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintGuide_begin="175dp" />
+                <com.google.android.material.circularreveal.cardview.CircularRevealCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/warningText2"
+                    android:id="@+id/addPhoneBtn"
+                    app:cardCornerRadius="40dp"
+                    app:cardElevation="5dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="#4DFF00">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/phoneRecView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="#DDDDDD"
-                app:layout_constraintBottom_toTopOf="@+id/guideline5"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintStart_toStartOf="@+id/guideline6"
-                app:layout_constraintTop_toTopOf="@+id/guideline7" />
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#4DFF00"
+                        android:padding="5dp">
 
-            <EditText
-                android:id="@+id/editNum1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:hint="Enter The Number"
-                android:inputType="number"
-                android:textColorHint="#5E5A5A"
-                app:layout_constraintStart_toStartOf="@+id/guideline6"
-                app:layout_constraintTop_toBottomOf="@+id/waringText1" />
 
-            <Button
-                android:id="@+id/addPhoneBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Add"
-                app:layout_constraintStart_toStartOf="@+id/guideline6"
-                app:layout_constraintTop_toBottomOf="@+id/warningText2" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add Number"
+                            android:textColor="@color/black"
+                            android:background="#4DFF00"
+                            android:textStyle="bold"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </RelativeLayout>
+
+
+
+
+                </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
+
+                <!--                    <Button-->
+                <!--                        android:id="@+id/addPhoneBtn"-->
+                <!--                        android:layout_width="wrap_content"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_below="@+id/editNum1"-->
+                <!--                        android:layout_toRightOf="@id/warningText2"-->
+                <!--                        android:layout_marginTop="10dp"-->
+                <!--                        android:layout_marginStart="10dp"-->
+                <!--                        android:text="Add"/>-->
+
+                <TextView
+                    android:id="@+id/warningText2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="required*"
+                    android:textColor="#FF0000"
+                    android:textSize="10sp"
+                    android:visibility="gone"
+                    android:layout_below="@+id/editNum1"
+                    android:layout_marginStart="30dp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/phoneRecView"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_below="@+id/addPhoneBtn"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="20dp"
+                    android:padding="10dp"
+                    android:background="@drawable/stokes_for_edit_text"
+                    android:textAlignment="center"
+                    />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/phoneRecView"
+                    android:id="@+id/button"
+                    android:layout_marginTop="40dp"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:backgroundTint="#4DFF00"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#4DFF00">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="REGISTER"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:textSize="20dp"
+                            android:padding="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_centerHorizontal="true"/>
+
+                    </RelativeLayout>
+
+
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!--                    ======================================Register button-->
+                <!--                    <Button-->
+                <!--                        android:id="@+id/button"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_marginStart="20dp"-->
+                <!--                        android:layout_marginEnd="20dp"-->
+                <!--                        android:layout_marginBottom="60dp"-->
+                <!--                        android:background="@drawable/button_rounded"-->
+                <!--                        android:text="Register" />-->
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <ImageView-->
+<!--                android:id="@+id/imageView"-->
+<!--                android:layout_width="188dp"-->
+<!--                android:layout_height="122dp"-->
+<!--                android:layout_marginTop="28dp"-->
+<!--                android:src="@mipmap/womensafetyicon"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.497"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+<!--            -->
+<!--            -->
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+<!--        -->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:id="@+id/parent"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/editName1"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:ems="8"-->
+<!--                android:hint="Enter Your Name"-->
+<!--                android:textColor="#000000"-->
+<!--                android:textColorHint="#5E5A5A"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/guideline6"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/guideline8" />-->
+
+<!--            -->
+
+<!--            <Button-->
+<!--                android:id="@+id/button"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginEnd="20dp"-->
+<!--                android:layout_marginBottom="60dp"-->
+<!--                android:background="@drawable/button_rounded"-->
+<!--                android:text="Register"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/guideline5" />-->
+
+<!--            <androidx.constraintlayout.widget.Guideline-->
+<!--                android:id="@+id/guideline3"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                app:layout_constraintGuide_end="16dp" />-->
+
+<!--            <androidx.constraintlayout.widget.Guideline-->
+<!--                android:id="@+id/guideline4"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintGuide_begin="223dp" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/waringText1"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="required*"-->
+<!--                android:textColor="#FF0000"-->
+<!--                android:textSize="10sp"-->
+<!--                android:visibility="gone"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/guideline6"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/editName1" />-->
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/warningText2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="required*"-->
+<!--                android:textColor="#FF0000"-->
+<!--                android:textSize="10sp"-->
+<!--                android:visibility="gone"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/guideline6"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/editNum1" />-->
+
+<!--            <androidx.constraintlayout.widget.Guideline-->
+<!--                android:id="@+id/guideline5"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintGuide_begin="622dp" />-->
+
+<!--            <androidx.constraintlayout.widget.Guideline-->
+<!--                android:id="@+id/guideline6"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                app:layout_constraintGuide_begin="16dp" />-->
+
+<!--            <androidx.constraintlayout.widget.Guideline-->
+<!--                android:id="@+id/guideline7"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintGuide_begin="342dp" />-->
+
+<!--            <androidx.constraintlayout.widget.Guideline-->
+<!--                android:id="@+id/guideline8"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintGuide_begin="175dp" />-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/phoneRecView"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:background="#DDDDDD"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/guideline5"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/guideline3"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/guideline6"-->
+<!--                app:layout_constraintTop_toTopOf="@+id/guideline7" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/editNum1"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:hint="Enter The Number"-->
+<!--                android:inputType="number"-->
+<!--                android:textColorHint="#5E5A5A"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/guideline6"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/waringText1" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/addPhoneBtn"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:text="Add"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/guideline6"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/warningText2" />-->
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
     </ScrollView>
 
 

@@ -26,7 +26,8 @@
         app:cardCornerRadius="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/list_of_settings">
+        android:id="@+id/list_of_settings"
+        app:cardElevation="5dp">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -36,7 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_action_list_of_settings"
-                android:background="#686868"
+                android:background="#FFFFFF"
                 android:padding="8dp"/>
 
         </RelativeLayout>
@@ -126,7 +127,7 @@
                     android:id="@+id/editingPageNameIconCardView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="#FFF496"
+                    android:background="#4DFF00"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -134,7 +135,7 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#FFF496">
+                        android:background="#4DFF00">
 
 
                         <ImageView
@@ -218,7 +219,7 @@
                                     android:id="@+id/last_ten_location_icon"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="3dp"
+                                    android:layout_marginStart="10dp"
                                     android:padding="10dp"
                                     android:layout_centerVertical="true"
                                     android:src="@drawable/ic_action_last_ten_locations" />
@@ -226,7 +227,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="20dp"
+                                    android:layout_marginStart="10dp"
                                     android:layout_toRightOf="@+id/last_ten_location_icon"
                                     android:padding="10dp"
                                     android:text="Last 10 Saved Locations"
@@ -257,13 +258,13 @@
                                     android:layout_height="wrap_content"
                                     android:padding="10dp"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginStart="3dp"
+                                    android:layout_marginStart="10dp"
                                     android:src="@drawable/ic_action_add_save_location" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="20dp"
+                                    android:layout_marginStart="10dp"
                                     android:layout_toRightOf="@+id/last_add_to_location_icon"
                                     android:padding="10dp"
                                     android:text="Add To Saved Locations"
@@ -294,13 +295,13 @@
                                     android:layout_height="wrap_content"
                                     android:padding="10dp"
                                     android:layout_centerVertical="true"
-                                    android:layout_marginStart="3dp"
+                                    android:layout_marginStart="10dp"
                                     android:src="@drawable/ic_action_change_black" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="20dp"
+                                    android:layout_marginStart="10dp"
                                     android:layout_toEndOf="@+id/edit_the_registered_details"
                                     android:padding="10dp"
                                     android:text="Edit Saved Details"
@@ -330,14 +331,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:padding="10dp"
-                                    android:layout_marginStart="3dp"
+                                    android:layout_marginStart="10dp"
                                     android:layout_centerVertical="true"
                                     android:src="@drawable/ic_action_my_location" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="20dp"
+                                    android:layout_marginStart="10dp"
                                     android:layout_toEndOf="@+id/my_location_icon"
                                     android:padding="10dp"
                                     android:text="My Location"
@@ -392,7 +393,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="5dp"
                             android:layout_toEndOf="@+id/settings_icon"
                             android:padding="10dp"
                             android:text="Settings"
@@ -431,7 +432,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
+                            android:layout_marginStart="5dp"
                             android:layout_toEndOf="@+id/about_icon"
                             android:padding="10dp"
                             android:text="About"
@@ -453,14 +454,12 @@
         android:id="@+id/reLocateCardBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-
-        app:layout_constraintEnd_toStartOf="@+id/changeCard"
-        app:layout_constraintHorizontal_bias="0.91"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintBottom_toTopOf="@+id/circularRevealCardView"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -469,7 +468,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#686868"
+                android:background="#FFFFFF"
                 android:padding="5dp"
                 android:src="@drawable/ic_action_relocate" />
 
@@ -536,7 +535,7 @@
 <!--    Editing Details card view-->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardExpand"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:layout_marginStart="20dp"
@@ -550,227 +549,539 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.29000002">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardCancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="-1dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/cardNameCard"
-                app:layout_constraintTop_toTopOf="parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-                <ImageView
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardCancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_action_cancel" />
-            </com.google.android.material.card.MaterialCardView>
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="-1dp">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardNameCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="50dp"
-                app:cardElevation="-1dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_action_cancel" />
+                </com.google.android.material.card.MaterialCardView>
 
-                <RelativeLayout
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardNameCard"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    app:cardElevation="-1dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <RelativeLayout
-                        android:id="@+id/cardTextNameDisplay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
                         <RelativeLayout
-                            android:id="@+id/relForNameAndEditBtn"
+                            android:id="@+id/cardTextNameDisplay"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:visibility="visible">
+                            android:layout_height="wrap_content">
 
-                            <TextView
-                                android:id="@+id/cardTextName"
+                            <RelativeLayout
+                                android:id="@+id/relForNameAndEditBtn"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="@font/numans"
-                                android:text="Text View"
-                                android:padding="10dp"
-                                android:layout_centerVertical="true"
-                                android:textColor="@color/black"
-                                android:textSize="20dp" />
+                                android:layout_marginStart="20dp"
+                                android:visibility="visible">
 
-                            <com.google.android.material.card.MaterialCardView
-                                android:id="@+id/imageBtnForEditingName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="50dp"
-                                android:layout_marginEnd="10dp"
-                                android:layout_centerVertical="true"
-                                android:layout_toRightOf="@+id/cardTextName"
-                                app:cardCornerRadius="20dp"
-                                app:cardElevation="-1dp">
-
-                                <ImageView
+                                <TextView
+                                    android:id="@+id/cardTextName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_toRightOf="@+id/cardTextName"
-                                    android:background="@color/white"
+                                    android:fontFamily="@font/numans"
+                                    android:text="Text View"
                                     android:padding="10dp"
-                                    android:src="@drawable/ic_action_edit" />
+                                    android:layout_centerVertical="true"
+                                    android:textColor="@color/black"
+                                    android:textSize="20dp" />
 
-                            </com.google.android.material.card.MaterialCardView>
-
-                        </RelativeLayout>
-
-
-                        <RelativeLayout
-                            android:id="@+id/cardTextNameHide"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toRightOf="@+id/relForNameAndEditBtn"
-                            android:visibility="gone">
-
-                            <EditText
-                                android:id="@+id/cardEditName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:hint="Enter Your Name" />
-
-                            <com.google.android.material.card.MaterialCardView
-                                android:id="@+id/SaveBtnForNameInCard"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginTop="10dp"
-                                android:layout_toRightOf="@+id/cardEditName"
-                                app:cardCornerRadius="20dp"
-                                app:cardElevation="-1dp">
-
-                                <ImageView
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/imageBtnForEditingName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@color/white"
-                                    android:padding="5dp"
-                                    android:src="@drawable/ic_action_save" />
+                                    android:layout_marginStart="50dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_toRightOf="@+id/cardTextName"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="-1dp">
 
-                            </com.google.android.material.card.MaterialCardView>
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_toRightOf="@+id/cardTextName"
+                                        android:background="@color/white"
+                                        android:padding="10dp"
+                                        android:src="@drawable/ic_action_edit" />
 
-                            <com.google.android.material.card.MaterialCardView
-                                android:id="@+id/CancelBtnForNameEditInCard"
+                                </com.google.android.material.card.MaterialCardView>
+
+                            </RelativeLayout>
+                            <RelativeLayout
+                                android:id="@+id/cardTextNameHide"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:layout_marginTop="10dp"
-                                android:layout_toRightOf="@+id/SaveBtnForNameInCard"
-                                app:cardCornerRadius="20dp"
-                                app:cardElevation="-1dp">
+                                android:layout_toRightOf="@+id/relForNameAndEditBtn"
+                                android:visibility="gone">
 
-                                <ImageView
+                                <EditText
+                                    android:id="@+id/cardEditName"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="15dp"
+                                    android:layout_marginStart="20dp"
+                                    android:layout_marginEnd="20dp"
+                                    android:padding="15dp"
+                                    android:textColor="#000000"
+                                    android:background="@drawable/stokes_for_edit_text"
+                                    android:hint="Enter Your Name" />
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/SaveBtnForNameInCard"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@color/white"
-                                    android:padding="5dp"
-                                    android:src="@drawable/ic_action_cancel" />
+                                    android:layout_marginStart="30dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_below="@+id/cardWarningName"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="-1dp">
 
-                            </com.google.android.material.card.MaterialCardView>
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@color/white"
+                                        android:padding="5dp"
+                                        android:src="@drawable/ic_action_save" />
+
+                                </com.google.android.material.card.MaterialCardView>
+
+                                <com.google.android.material.card.MaterialCardView
+                                    android:id="@+id/CancelBtnForNameEditInCard"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_below="@+id/cardWarningName"
+                                    android:layout_toRightOf="@+id/SaveBtnForNameInCard"
+                                    app:cardCornerRadius="20dp"
+                                    app:cardElevation="-1dp">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@color/white"
+                                        android:padding="5dp"
+                                        android:src="@drawable/ic_action_cancel" />
+
+                                </com.google.android.material.card.MaterialCardView>
 
 
-                            <TextView
-                                android:id="@+id/cardWarningName"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_below="@+id/cardEditName"
-                                android:layout_marginStart="10dp"
-                                android:text="Text View"
-                                android:textColor="#FF0000"
-                                android:visibility="gone" />
+                                <TextView
+                                    android:id="@+id/cardWarningName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/cardEditName"
+                                    android:layout_marginStart="30dp"
+                                    android:text="Text View"
+                                    android:textColor="#FF0000"
+                                    android:visibility="gone" />
+
+                            </RelativeLayout>
 
                         </RelativeLayout>
                     </RelativeLayout>
-                </RelativeLayout>
-            </com.google.android.material.card.MaterialCardView>
+                </com.google.android.material.card.MaterialCardView>
 
-            <EditText
-                android:id="@+id/cardEditNumber"
-                android:layout_width="wrap_content"
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/cardNameCard"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:hint="Phone Numbers"
-                android:ems="10"
-                android:inputType="number"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardNameCard" />
+                android:layout_marginTop="10dp">
 
-            <TextView
-                android:id="@+id/cardWarningNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/cardEditNumber"
-                android:text="Tex View"
-                android:textColor="#FF0000"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="@+id/cardEditNumber"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/cardEditNumber"
-                app:layout_constraintTop_toBottomOf="@+id/cardEditNumber" />
+                <EditText
+                    android:id="@+id/cardEditNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/stokes_for_edit_text"
+                    android:textSize="15dp"
+                    android:padding="15dp"
+                    android:textColor="#000000"
+                    android:textColorHint="#5E5A5A"
+                    android:layout_marginTop="10dp"
+                    android:hint="Phone Numbers"
+                    android:ems="10"
+                    android:inputType="number"/>
 
-            <Button
-                android:id="@+id/cardAddBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/cardWarningNumber"
-                android:backgroundTint="#AD62FF00"
-                android:text="Add"
-                app:layout_constraintEnd_toEndOf="@+id/cardWarningNumber"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/cardWarningNumber"
-                app:layout_constraintTop_toBottomOf="@+id/cardWarningNumber" />
+                <TextView
+                    android:id="@+id/cardWarningNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cardEditNumber"
+                    android:text="Tex View"
+                    android:layout_marginStart="30dp"
+                    android:textColor="#FF0000"
+                    android:visibility="gone" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/cardRecView"
-                android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_below="@+id/cardAddBtn"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="12dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardAddBtn" />
+                <com.google.android.material.circularreveal.cardview.CircularRevealCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cardWarningNumber"
+                    android:id="@+id/cardAddBtn"
+                    app:cardCornerRadius="40dp"
+                    app:cardElevation="5dp"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="#4DFF00">
 
-            <Button
-                android:id="@+id/saveCard"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/cardRecView"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:backgroundTint="#AD62FF00"
-                android:text="Save"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardRecView" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#4DFF00"
+                        android:padding="5dp">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add Number"
+                            android:textColor="@color/black"
+                            android:background="#4DFF00"
+                            android:textStyle="bold"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"/>
+
+                    </RelativeLayout>
+
+
+
+
+                </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/cardRecView"
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_below="@+id/cardAddBtn"
+                    android:background="@drawable/stokes_for_edit_text"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:padding="10dp"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/cardRecView"
+                    android:id="@+id/saveCard"
+                    android:layout_marginTop="40dp"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="20dp"
+                    android:backgroundTint="#4DFF00"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#4DFF00">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SAVE"
+                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:textSize="20dp"
+                            android:padding="10dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_centerHorizontal="true"/>
+
+                    </RelativeLayout>
+
+
+
+                </com.google.android.material.card.MaterialCardView>
+
+<!--                <Button-->
+<!--                    android:id="@+id/saveCard"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/cardRecView"-->
+<!--                    android:layout_centerHorizontal="true"-->
+<!--                    android:layout_marginTop="20dp"-->
+<!--                    android:backgroundTint="#AD62FF00"-->
+<!--                    android:text="Save"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/cardRecView" />-->
+<!--                <Button-->
+<!--                    android:id="@+id/cardAddBtn"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/cardWarningNumber"-->
+<!--                    android:backgroundTint="#AD62FF00"-->
+<!--                    android:text="Add"-->
+<!--                    app:layout_constraintEnd_toEndOf="@+id/cardWarningNumber"-->
+<!--                    app:layout_constraintHorizontal_bias="0.0"-->
+<!--                    app:layout_constraintStart_toStartOf="@+id/cardWarningNumber"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/cardWarningNumber" />-->
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <com.google.android.material.card.MaterialCardView-->
+<!--                android:id="@+id/cardCancel"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_alignParentEnd="true"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginEnd="20dp"-->
+<!--                app:cardCornerRadius="20dp"-->
+<!--                app:cardElevation="-1dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="1.0"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/cardNameCard"-->
+<!--                app:layout_constraintTop_toTopOf="parent">-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@color/white"-->
+<!--                    android:padding="10dp"-->
+<!--                    android:src="@drawable/ic_action_cancel" />-->
+<!--            </com.google.android.material.card.MaterialCardView>-->
+
+<!--            <com.google.android.material.card.MaterialCardView-->
+<!--                android:id="@+id/cardNameCard"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginTop="50dp"-->
+<!--                app:cardElevation="-1dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.0"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent">-->
+
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content">-->
+
+<!--                    <RelativeLayout-->
+<!--                        android:id="@+id/cardTextNameDisplay"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content">-->
+
+<!--                        <RelativeLayout-->
+<!--                            android:id="@+id/relForNameAndEditBtn"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:visibility="visible">-->
+
+<!--                            <TextView-->
+<!--                                android:id="@+id/cardTextName"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:fontFamily="@font/numans"-->
+<!--                                android:text="Text View"-->
+<!--                                android:padding="10dp"-->
+<!--                                android:layout_centerVertical="true"-->
+<!--                                android:textColor="@color/black"-->
+<!--                                android:textSize="20dp" />-->
+
+<!--                            <com.google.android.material.card.MaterialCardView-->
+<!--                                android:id="@+id/imageBtnForEditingName"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginStart="50dp"-->
+<!--                                android:layout_marginEnd="10dp"-->
+<!--                                android:layout_centerVertical="true"-->
+<!--                                android:layout_toRightOf="@+id/cardTextName"-->
+<!--                                app:cardCornerRadius="20dp"-->
+<!--                                app:cardElevation="-1dp">-->
+
+<!--                                <ImageView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_toRightOf="@+id/cardTextName"-->
+<!--                                    android:background="@color/white"-->
+<!--                                    android:padding="10dp"-->
+<!--                                    android:src="@drawable/ic_action_edit" />-->
+
+<!--                            </com.google.android.material.card.MaterialCardView>-->
+
+<!--                        </RelativeLayout>-->
+
+
+<!--                        <RelativeLayout-->
+<!--                            android:id="@+id/cardTextNameHide"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_toRightOf="@+id/relForNameAndEditBtn"-->
+<!--                            android:visibility="gone">-->
+
+<!--                            <EditText-->
+<!--                                android:id="@+id/cardEditName"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginTop="5dp"-->
+<!--                                android:hint="Enter Your Name" />-->
+
+<!--                            <com.google.android.material.card.MaterialCardView-->
+<!--                                android:id="@+id/SaveBtnForNameInCard"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginStart="10dp"-->
+<!--                                android:layout_marginTop="10dp"-->
+<!--                                android:layout_toRightOf="@+id/cardEditName"-->
+<!--                                app:cardCornerRadius="20dp"-->
+<!--                                app:cardElevation="-1dp">-->
+
+<!--                                <ImageView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:background="@color/white"-->
+<!--                                    android:padding="5dp"-->
+<!--                                    android:src="@drawable/ic_action_save" />-->
+
+<!--                            </com.google.android.material.card.MaterialCardView>-->
+
+<!--                            <com.google.android.material.card.MaterialCardView-->
+<!--                                android:id="@+id/CancelBtnForNameEditInCard"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_marginStart="5dp"-->
+<!--                                android:layout_marginTop="10dp"-->
+<!--                                android:layout_toRightOf="@+id/SaveBtnForNameInCard"-->
+<!--                                app:cardCornerRadius="20dp"-->
+<!--                                app:cardElevation="-1dp">-->
+
+<!--                                <ImageView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:background="@color/white"-->
+<!--                                    android:padding="5dp"-->
+<!--                                    android:src="@drawable/ic_action_cancel" />-->
+
+<!--                            </com.google.android.material.card.MaterialCardView>-->
+
+
+<!--                            <TextView-->
+<!--                                android:id="@+id/cardWarningName"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:layout_below="@+id/cardEditName"-->
+<!--                                android:layout_marginStart="10dp"-->
+<!--                                android:text="Text View"-->
+<!--                                android:textColor="#FF0000"-->
+<!--                                android:visibility="gone" />-->
+
+<!--                        </RelativeLayout>-->
+<!--                    </RelativeLayout>-->
+<!--                </RelativeLayout>-->
+<!--            </com.google.android.material.card.MaterialCardView>-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/cardEditNumber"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/cardNameCard"-->
+<!--                android:layout_marginStart="20dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:hint="Phone Numbers"-->
+<!--                android:ems="10"-->
+<!--                android:inputType="number"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.0"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/cardNameCard" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/cardWarningNumber"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/cardEditNumber"-->
+<!--                android:text="Tex View"-->
+<!--                android:textColor="#FF0000"-->
+<!--                android:visibility="gone"-->
+<!--                app:layout_constraintEnd_toEndOf="@+id/cardEditNumber"-->
+<!--                app:layout_constraintHorizontal_bias="0.0"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/cardEditNumber"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/cardEditNumber" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/cardAddBtn"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/cardWarningNumber"-->
+<!--                android:backgroundTint="#AD62FF00"-->
+<!--                android:text="Add"-->
+<!--                app:layout_constraintEnd_toEndOf="@+id/cardWarningNumber"-->
+<!--                app:layout_constraintHorizontal_bias="0.0"-->
+<!--                app:layout_constraintStart_toStartOf="@+id/cardWarningNumber"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/cardWarningNumber" />-->
+
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:id="@+id/cardRecView"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="200dp"-->
+<!--                android:layout_below="@+id/cardAddBtn"-->
+<!--                android:layout_marginStart="12dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginEnd="12dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/cardAddBtn" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/saveCard"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/cardRecView"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:backgroundTint="#AD62FF00"-->
+<!--                android:text="Save"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/cardRecView" />-->
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
     </androidx.cardview.widget.CardView>
 
@@ -795,13 +1106,58 @@
                 android:id="@+id/imageChange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#686868"
+                android:background="#FFF9F9"
                 android:padding="5dp"
                 android:src="@drawable/ic_action_change" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
 
+
+<!--    send locations pdf-->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/circularRevealCardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/send_WA_messag_card"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="TooManyViews">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp">
+
+            <TextView
+                android:id="@+id/pdf_location_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="#FBFBFB"
+                android:padding="5dp"
+                android:text="Send location pdf"
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_toRightOf="@+id/pdf_location_text"
+                android:background="#FFFFFF"
+                android:padding="5dp"
+                android:src="@drawable/ic_action_send_pdf" />
+
+        </RelativeLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
 
 <!--    sending message on whatsapp-->
     <com.google.android.material.card.MaterialCardView
@@ -810,7 +1166,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
-        app:cardCornerRadius="10dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toTopOf="@+id/changeCard"
         app:layout_constraintEnd_toEndOf="parent">
@@ -818,7 +1174,9 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#686868">
+            android:background="#FFFFFF"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp">
 
             <ImageView
                 android:id="@+id/image_send_WA"
@@ -826,26 +1184,22 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/textView3"
-                android:background="#686868"
-                android:padding="10dp"
-                android:src="@drawable/ic_action_lmedia"
-                tools:layout_editor_absoluteX="356dp"
-                tools:layout_editor_absoluteY="673dp" />
+                android:background="#FFFFFF"
+                android:padding="5dp"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/ic_action_lmedia" />
 
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:background="#686868"
-                android:gravity="center_horizontal|center_vertical"
-                android:padding="10dp"
+                android:background="#FBFBFB"
+                android:padding="5dp"
                 android:text="Send Img/location"
                 android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                tools:layout_editor_absoluteX="262dp"
-                tools:layout_editor_absoluteY="673dp" />
+                android:textColor="#000000"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
@@ -857,8 +1211,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        app:cardCornerRadius="10dp"
+        android:layout_marginBottom="40dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -866,47 +1220,37 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#686868">
+            android:background="#F8F8F8"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp">
 
             <ImageView
                 android:id="@+id/imageConnect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/textView2"
-                android:background="#686868"
-                android:padding="10dp"
+                android:background="#FFFFFF"
+                android:padding="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_action_connect"
-                tools:layout_editor_absoluteX="356dp"
-                tools:layout_editor_absoluteY="673dp" />
+                android:src="@drawable/ic_action_connect" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#686868"
-                android:gravity="center_horizontal|center_vertical"
-                android:padding="10dp"
-                android:text="Send Msg/location"
+                android:background="#FFFFFF"
+                android:padding="5dp"
+                android:text="Send msg/location"
                 android:textAlignment="center"
                 android:layout_centerVertical="true"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                tools:layout_editor_absoluteX="262dp"
-                tools:layout_editor_absoluteY="673dp" />
+                android:textColor="#000000"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"
-        android:id="@+id/tempimage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

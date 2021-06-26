@@ -3,6 +3,7 @@ package com.applocstion.womensafetyapplication;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.solver.GoalRow;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
@@ -25,6 +26,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,13 +52,13 @@ public class MainActivity2 extends AppCompatActivity {
 
     private static final String ACCESSIBILITY_SERVICE_NAME = "com.whatsapp";
     private String TAG;
-    private Button btnRegister, addBtn;
+    private CardView btnRegister, addBtn;
     private EditText editUserName, editPhone1;
     private TextView textWarning1, textwarning2;
     private RecyclerView recyclerView;
     private NumRecAdapter adapter;
     private ArrayList<Phone_numbers> phone_numbers_list;
-    private ConstraintLayout constraintLayout;
+    private RelativeLayout parent;
     private PersonsId personsId;
     public static DataBaseHolder dataBaseHolder;
 
@@ -128,7 +130,7 @@ public class MainActivity2 extends AppCompatActivity {
         addBtn = findViewById(R.id.addPhoneBtn);
         recyclerView = findViewById(R.id.phoneRecView);
         adapter = new NumRecAdapter(MainActivity2.this);
-        constraintLayout = findViewById(R.id.parent);
+        parent = findViewById(R.id.relativeParent);
         phone_numbers_list = new ArrayList<>();
         dataBaseHolder = new DataBaseHolder(this);
     }
@@ -159,7 +161,7 @@ public class MainActivity2 extends AppCompatActivity {
             count = count + 1;
         }else if(adapter.getPhoneNum().size() < 3){
             Snackbar snackbar = Snackbar
-                    .make(constraintLayout, "Required Aleast 3 Phone Numbers", Snackbar.LENGTH_LONG)
+                    .make(parent, "Required Aleast 3 Phone Numbers", Snackbar.LENGTH_LONG)
                     .setAction("Got it", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

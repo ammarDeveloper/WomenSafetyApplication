@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="10dp"
     app:cardElevation="-1dp">
 
     <RelativeLayout
@@ -23,15 +22,14 @@
 
                 <TextView
                     android:id="@+id/numtext"
-                    android:layout_width="160dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Text View"
                     android:textColor="@color/black"
-                    android:textSize="20dp"
+                    android:textSize="18dp"
                     android:ems="10"
-                    android:padding="10dp"
-                    android:layout_centerVertical="true"
-                    android:textStyle="bold"/>
+                    android:padding="5dp"
+                    android:layout_centerVertical="true" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="wrap_content"
@@ -48,7 +46,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_action_edit"
-                        android:padding="10dp"
+                        android:padding="5dp"
                         android:background="@color/white"/>
 
 
@@ -70,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:src="@drawable/ic_action_delete"
-                        android:padding="10dp"
+                        android:padding="5dp"
                         android:background="@color/white"/>
 
                 </com.google.android.material.card.MaterialCardView>
@@ -81,30 +79,34 @@
 
 <!--         Editing numbers-->
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/relForNumAndEditBtn"
                 android:id="@+id/expandR"
                 android:visibility="gone">
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter the Number"
-                    android:padding="10dp"
+                    android:layout_marginTop="5dp"
+                    android:padding="15dp"
                     android:ems="10"
-                    android:layout_centerVertical="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/stokes_for_edit_text"
+                    android:textSize="15dp"
                     android:inputType="number"
                     android:id="@+id/editedText"/>
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginStart="30dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/editedText"
+                    android:layout_below="@id/errorText"
                     android:id="@+id/saveExpaned"
                     app:cardCornerRadius="20dp"
-                    android:layout_centerVertical="true"
+                    android:layout_marginTop="5dp"
                     app:cardElevation="-1dp">
 
                     <ImageView
@@ -121,11 +123,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/saveExpaned"
+                    android:layout_below="@+id/errorText"
                     android:layout_marginStart="5dp"
                     android:layout_marginLeft="10dp"
                     app:cardElevation="-1dp"
                     app:cardCornerRadius="20dp"
-                    android:layout_centerVertical="true"
+                    android:layout_marginTop="5dp"
                     android:id="@+id/editNumCancelBtn">
 
                     <ImageView
@@ -145,6 +148,7 @@
                     android:text="Text View"
                     android:layout_below="@id/editedText"
                     android:id="@+id/errorText"
+                    android:layout_marginStart="30dp"
                     android:visibility="gone"
                     android:textColor="#FF0303"/>
 
