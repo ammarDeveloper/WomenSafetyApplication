@@ -109,12 +109,12 @@
                     app:cardElevation="5dp"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="10dp"
-                    android:backgroundTint="#4DFF00">
+                    android:background="@drawable/button_round_ovel">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="#4DFF00"
+                        android:background="@drawable/button_round_ovel"
                         android:padding="5dp">
 
 
@@ -123,7 +123,6 @@
                             android:layout_height="wrap_content"
                             android:text="Add Number"
                             android:textColor="@color/black"
-                            android:background="#4DFF00"
                             android:textStyle="bold"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"/>
@@ -179,14 +178,14 @@
                     app:cardCornerRadius="40dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="10dp"
-                    android:backgroundTint="#4DFF00"
+                    android:background="@drawable/button_round_ovel"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#4DFF00">
+                        android:background="@drawable/button_round_ovel">
 
                         <TextView
                             android:layout_width="wrap_content"

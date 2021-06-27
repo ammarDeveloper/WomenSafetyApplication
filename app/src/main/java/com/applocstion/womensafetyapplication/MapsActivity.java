@@ -435,6 +435,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         add_to_saved_location_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // todo: update to delete the saved locations
                 Date date = new Date();
                 String datetime = DateFormat.getDateTimeInstance().format(date);
                 LocationDate locationDate = new LocationDate(-1, lineAddress, datetime);
@@ -618,7 +619,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             DataBaseHolder dataBaseHolder = new DataBaseHolder(this);
             PersonsId personsId = new PersonsId(dataBaseHolder.getData().get(0).getId(), cardTextName.getText().toString(), adapter.getPhoneNum());
             int b = dataBaseHolder.updateData(personsId);
-            Toast.makeText(this, "Data Set Changed", Toast.LENGTH_SHORT).show();
+            if(b == -1){
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
+            } else{
+                Toast.makeText(this, "Data Set Changed", Toast.LENGTH_SHORT).show();
+            }
             cardEditName.getText().clear();
             cardEditNumber.getText().clear();
             closeCard();

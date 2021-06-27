@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,7 +83,7 @@ public class List_of_locations_adapter extends RecyclerView.Adapter<List_of_loca
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView list_of_locations_address, list_of_locations_date_time;
-        private CardView card_of_saved_locations;
+        private RelativeLayout card_of_saved_locations;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             card_of_saved_locations = itemView.findViewById(R.id.card_of_saved_locations);

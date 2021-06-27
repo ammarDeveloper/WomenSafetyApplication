@@ -32,9 +32,12 @@
         android:theme="@style/Theme.WomenSafetyApplication">
         <activity
             android:name=".SettingsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_settings" />
-        <activity android:name=".About_Activity" />
-        <activity android:name=".List_of_locations" />
+        <activity android:name=".About_Activity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".List_of_locations"
+            android:screenOrientation="portrait"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -54,8 +57,10 @@
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"
             android:screenOrientation="portrait" />
-        <activity android:name=".MainActivity2" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity2"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
