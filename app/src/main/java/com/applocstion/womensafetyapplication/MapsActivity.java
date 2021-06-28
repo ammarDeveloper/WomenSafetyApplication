@@ -44,6 +44,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -74,7 +75,7 @@ import java.util.Date;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private static final String TAG = "MapsActivity";
-    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_VIDEO_CAPTURE = 1;
     double log, lat;
 
     private GoogleMap mMap;
@@ -226,14 +227,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        // todo: sending video feature
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            String BitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(), imageBitmap, "title", null);
-            Uri uri = Uri.parse(BitmapPath);
+        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
+            Uri uri = data.getData();
             sendWAMessage(uri);
-
         }
     }
 
@@ -339,14 +337,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         send_WA_message_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // todo: add video recording feature
                 callBackRelocation();
                 DataBaseHolder dataBaseHolder = new DataBaseHolder(MapsActivity.this);
                 userName = dataBaseHolder.getData().get(0).getName();
                 Phone_numbers = dataBaseHolder.getData().get(0).getPhone_numbers();
                 if(checkCameraHardware(MapsActivity.this)){
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                     try{
-                        startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
+                        intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 10);
+                        startActivityForResult(intent, REQUEST_VIDEO_CAPTURE);
 
                     }catch (Exception e){
                         Toast.makeText(MapsActivity.this, "Something went wrong, Your Android version doesn't support this feature", Toast.LENGTH_SHORT).show();
@@ -575,7 +575,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             transition.addTarget(R.id.errorMessageCard);
             errorMessageCard.setVisibility(View.VISIBLE);
         }
-
     }
 
     // Sending messages
@@ -600,7 +599,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             whatsappintent.putExtra(Intent.EXTRA_TEXT, locationlink);
             whatsappintent.setType("text/plain");
             whatsappintent.putExtra(Intent.EXTRA_STREAM, uri);
-            whatsappintent.setType("image/*");
+            whatsappintent.setType("video/*");
             startActivity(whatsappintent);
             Toast.makeText(this, "message sent", Toast.LENGTH_SHORT).show();
         } else {

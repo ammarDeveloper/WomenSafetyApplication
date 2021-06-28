@@ -52,6 +52,9 @@ public class List_of_locations_adapter extends RecyclerView.Adapter<List_of_loca
             public void onClick(View v) {
                 long clicketime = System.currentTimeMillis();
                 if (clicketime - lastclicktime[0] < 300){
+                    LocationDate locationDate = new LocationDate(locationDateslists.get(position).getLocation_id(), locationDateslists.get(position).getLocation(), locationDateslists.get(position).getDatetime());
+                    DataBaseHolder dataBaseHolder = new DataBaseHolder(mContext);
+                    dataBaseHolder.deleteUsersLocations(locationDate);
                     locationDateslists.remove(position);
                     setLocationDateslists(locationDateslists);
                     lastclicktime[0] = 0;

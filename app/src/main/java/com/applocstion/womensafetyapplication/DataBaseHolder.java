@@ -103,6 +103,18 @@ public class DataBaseHolder extends SQLiteOpenHelper {
         return update;
     }
 
+    // Deleting the data of persons id
+    public boolean deleteData(PersonsId personsId){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM "+PERSON_TABLE+" WHERE "+PERSON_ID+"="+personsId.getId();
+        Cursor cursor = db.rawQuery(queryString, null);
+        if(cursor.moveToNext()){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
     // Adding the data of users locations
     public boolean addUsersLocations(LocationDate locationDate){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -151,5 +163,17 @@ public class DataBaseHolder extends SQLiteOpenHelper {
             }while (cursor.moveToNext());
         }
         return locationDateArrayList;
+    }
+
+    // deleting the data of users locations
+    public boolean deleteUsersLocations(LocationDate locationDate){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String queryString = "DELETE FROM "+ LOCATIONS_TABLE +" WHERE "+LOCATION_ID+"="+locationDate.getLocation_id();
+        Cursor cursor = db.rawQuery(queryString, null);
+        if (cursor.moveToNext()){
+            return true;
+        }else {
+            return false;
+        }
     }
 }
