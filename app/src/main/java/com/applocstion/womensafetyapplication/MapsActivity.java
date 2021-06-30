@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,7 +22,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.Typeface;
+import android.graphics.pdf.PdfDocument;
 import android.hardware.Camera;
 import android.location.Address;
 import android.location.Geocoder;
@@ -32,6 +38,8 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -66,6 +74,7 @@ import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DateFormat;
@@ -76,13 +85,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private static final String TAG = "MapsActivity";
     private static final int REQUEST_VIDEO_CAPTURE = 1;
-    double log, lat;
+    private static final int PERMISSION_STORAGE = 100;
+    private static final int PAGE_WIDTH = 1080;
+    private static final int PAGE_HEIGHT = 2010;
+    private String datetime;
+    private double log, lat;
 
     private GoogleMap mMap;
     public static final int PERMISSIONS_SEND_MESSAGE = 98;
     private static final int PERMISSIONS_FINE_LOCATION = 99;
     private LatLng latLng;
-    private CardView cardViewConnect, cardViewEdit, cardExpand, addToCardNum, cardCancel,saveBtn, CancelNameEditFOrCard, SaveBtnForNameInCard, imageBtnForEditingName, errorMessageCard, relocateCardBtn, list_of_settings, editing_side_bar, editingPageNameIconCardView, last_ten_location_card, add_to_saved_location_card, edit_saved_details_card_view, my_location_card_view, settings_card_view, about_card_view, my_location_container_card_view, send_WA_message_card;
+    private CardView cardViewConnect, cardViewEdit, cardExpand, addToCardNum, cardCancel,saveBtn, CancelNameEditFOrCard, SaveBtnForNameInCard, imageBtnForEditingName, errorMessageCard, relocateCardBtn, list_of_settings, editing_side_bar, editingPageNameIconCardView, last_ten_location_card, add_to_saved_location_card, edit_saved_details_card_view, my_location_card_view, settings_card_view, about_card_view, my_location_container_card_view, send_WA_message_card, send_location_pdf_btn;
     private TextView cardWarningNumber, cardWarningName, cardTextName, my_location_body;
     private RelativeLayout cardTextNameHide, relForNameAndEditBtn;
     private String userName, lineAddress;
@@ -91,8 +104,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private NumRecAdapter adapter;
     private ConstraintLayout parent;
     private EditText cardEditNumber, cardEditName;
+    private Bitmap bitmap, scaleBitmap;
 
-    private static final int PERMISSION_CAMERA = 100;
 
     //Location Request is a config file for all Settings related to FusedLocationProvider
     private LocationRequest locationRequest;
@@ -219,6 +232,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     snackbar.show();
                 }
                 break;
+            case PERMISSION_STORAGE:
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
+                    sendLocationsPdf();
+                } else {
+                    Snackbar snackbar = Snackbar
+                            .make(parent, "Please Provide Storage Permission", Snackbar.LENGTH_LONG)
+                            .setAction("Got it", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                }
+                            });
+                    snackbar.show();
+                }
             default:
                 break;
         }
@@ -227,7 +254,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        // todo: sending video feature
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
             Uri uri = data.getData();
@@ -337,7 +363,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         send_WA_message_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // todo: add video recording feature
                 callBackRelocation();
                 DataBaseHolder dataBaseHolder = new DataBaseHolder(MapsActivity.this);
                 userName = dataBaseHolder.getData().get(0).getName();
@@ -350,6 +375,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     }catch (Exception e){
                         Toast.makeText(MapsActivity.this, "Something went wrong, Your Android version doesn't support this feature", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
+        // Button to send saved location pdf
+        send_location_pdf_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if((ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) && (ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)){
+                    sendLocationsPdf();
+                } else {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_STORAGE);
                     }
                 }
             }
@@ -435,9 +474,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         add_to_saved_location_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // todo: update to delete the saved locations
                 Date date = new Date();
-                String datetime = DateFormat.getDateTimeInstance().format(date);
+                datetime = DateFormat.getDateTimeInstance().format(date);
                 LocationDate locationDate = new LocationDate(-1, lineAddress, datetime);
                 DataBaseHolder dataBaseHolder = new DataBaseHolder(MapsActivity.this);
                 boolean A = dataBaseHolder.addUsersLocations(locationDate);
@@ -525,6 +563,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         my_location_body = findViewById(R.id.My_location_body);
         my_location_container_card_view = findViewById(R.id.my_location_container_card_view);
         send_WA_message_card = findViewById(R.id.send_WA_messag_card);
+        send_location_pdf_btn = findViewById(R.id.send_location_pdf_btn);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.pdf_top_banar);
+        scaleBitmap = Bitmap.createScaledBitmap(bitmap, 1080, 446, false);
     }
 
     // updating the gps
@@ -809,4 +850,74 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return app_installed;
     }
 
+    // sending location pdf
+    public void sendLocationsPdf(){
+        // todo: sening pdf to whatsapp
+        DataBaseHolder dataBaseHolder = new DataBaseHolder(MapsActivity.this);
+        if (dataBaseHolder.getUsersLocations().isEmpty()){
+            Toast.makeText(MapsActivity.this, "No Locations added please add the locations to send", Toast.LENGTH_SHORT).show();
+        } else {
+            PdfDocument pdfDocument = new PdfDocument();
+            Paint myPaint = new Paint();
+            PdfDocument.PageInfo myPageInfo1 = new PdfDocument.PageInfo.Builder(PAGE_WIDTH, PAGE_HEIGHT, 1).create();
+            PdfDocument.Page myPage1 = pdfDocument.startPage(myPageInfo1);
+            Canvas canvas = myPage1.getCanvas();
+
+            canvas.drawBitmap(scaleBitmap, 0, 0, myPaint);
+
+            myPaint.setStyle(Paint.Style.STROKE);
+            myPaint.setStrokeWidth(4);
+            canvas.drawRect(20, 476, PAGE_WIDTH-20, 556, myPaint);
+
+            myPaint.setTextAlign(Paint.Align.LEFT);
+            myPaint.setStyle(Paint.Style.FILL);
+            myPaint.setTypeface(Typeface.DEFAULT_BOLD);
+            myPaint.setTextSize(27f);
+            myPaint.setColor(Color.rgb(161, 158, 157));
+            canvas.drawText("SI.NO: ", 40, 526, myPaint);
+            canvas.drawText("Locations Visited", 200, 526, myPaint);
+            canvas.drawText("Date & Time", 900, 526, myPaint);
+
+            canvas.drawLine(180, 486, 180, 546, myPaint);
+            canvas.drawLine(880, 486, 880, 546, myPaint);
+
+            pdfDocument.finishPage(myPage1);
+
+            File filePath = Environment.getExternalStorageDirectory();
+            Date date = new Date();
+            datetime = DateFormat.getDateTimeInstance().format(date);
+
+            File file = new File(filePath, "Locations-at-"+datetime+".pdf");
+
+            try{
+                pdfDocument.writeTo(new FileOutputStream(file));
+                Toast.makeText(this, "Pdf Saved", Toast.LENGTH_SHORT).show();
+            }catch(Exception e){
+                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+
+
+            if(file.exists()) {
+                Intent whatsappintent = new Intent(Intent.ACTION_SEND);
+                whatsappintent.setPackage("com.whatsapp");
+                if (isAppInstalled(whatsappintent.getPackage())) {
+                    Uri uri = Uri.fromFile(file);
+
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+                        uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID+".provider", file);
+                    }
+
+                    whatsappintent.putExtra(Intent.EXTRA_STREAM, uri);
+                    whatsappintent.setType("application/pdf");
+                    startActivity(whatsappintent);
+                    Toast.makeText(this, "message sent", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "WhatsApp is not installed", Toast.LENGTH_SHORT).show();
+                }
+            }else {
+                Toast.makeText(this, "no such file", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 }
