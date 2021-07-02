@@ -42,6 +42,9 @@ import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.telephony.SmsManager;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -98,7 +101,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private CardView cardViewConnect, cardViewEdit, cardExpand, addToCardNum, cardCancel,saveBtn, CancelNameEditFOrCard, SaveBtnForNameInCard, imageBtnForEditingName, errorMessageCard, relocateCardBtn, list_of_settings, editing_side_bar, editingPageNameIconCardView, last_ten_location_card, add_to_saved_location_card, edit_saved_details_card_view, my_location_card_view, settings_card_view, about_card_view, my_location_container_card_view, send_WA_message_card, send_location_pdf_btn;
     private TextView cardWarningNumber, cardWarningName, cardTextName, my_location_body;
     private RelativeLayout cardTextNameHide, relForNameAndEditBtn;
-    private String userName, lineAddress;
+    private String userName, lineAddress, state;
     private ArrayList<Phone_numbers> Phone_numbers, phone_numbers_list;
     private RecyclerView cardRecyclerView;
     private NumRecAdapter adapter;
@@ -476,7 +479,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 Date date = new Date();
                 datetime = DateFormat.getDateTimeInstance().format(date);
-                LocationDate locationDate = new LocationDate(-1, lineAddress, datetime);
+                LocationDate locationDate = new LocationDate(-1, state,  lineAddress, datetime);
+                Toast.makeText(MapsActivity.this, state, Toast.LENGTH_SHORT).show();
                 DataBaseHolder dataBaseHolder = new DataBaseHolder(MapsActivity.this);
                 boolean A = dataBaseHolder.addUsersLocations(locationDate);
                 if (A){
@@ -606,6 +610,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             try {
                 ArrayList<Address> addresses = (ArrayList<Address>) geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                 lineAddress = addresses.get(0).getAddressLine(0);
+                state = addresses.get(0).getLocality();
             } catch (Exception e) {
                 lineAddress = String.valueOf(location.getLatitude()) + String.valueOf(location.getLongitude());
             }
@@ -852,13 +857,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     // sending location pdf
     public void sendLocationsPdf(){
-        // todo: sening pdf to whatsapp
         DataBaseHolder dataBaseHolder = new DataBaseHolder(MapsActivity.this);
         if (dataBaseHolder.getUsersLocations().isEmpty()){
             Toast.makeText(MapsActivity.this, "No Locations added please add the locations to send", Toast.LENGTH_SHORT).show();
         } else {
             PdfDocument pdfDocument = new PdfDocument();
             Paint myPaint = new Paint();
+            TextPaint textPaint = new TextPaint();
+            TextPaint textPaint1 = new TextPaint();
             PdfDocument.PageInfo myPageInfo1 = new PdfDocument.PageInfo.Builder(PAGE_WIDTH, PAGE_HEIGHT, 1).create();
             PdfDocument.Page myPage1 = pdfDocument.startPage(myPageInfo1);
             Canvas canvas = myPage1.getCanvas();
@@ -874,14 +880,62 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             myPaint.setTypeface(Typeface.DEFAULT_BOLD);
             myPaint.setTextSize(27f);
             myPaint.setColor(Color.rgb(161, 158, 157));
+
             canvas.drawText("SI.NO: ", 40, 526, myPaint);
             canvas.drawText("Locations Visited", 200, 526, myPaint);
             canvas.drawText("Date & Time", 900, 526, myPaint);
 
+            myPaint.setColor(Color.rgb(0, 0, 0));
             canvas.drawLine(180, 486, 180, 546, myPaint);
             canvas.drawLine(880, 486, 880, 546, myPaint);
 
+            ArrayList<LocationDate> listoflocationDate = dataBaseHolder.getUsersLocations();
+            int count = 1;
+            int y = 576;
+            for (LocationDate locationDate:listoflocationDate){
+                // todo : a proper text to dispay in pdf
+
+                textPaint1.setTextSize(22f);
+                textPaint1.setTypeface(Typeface.DEFAULT_BOLD);
+                StaticLayout textLayout = new StaticLayout(String.valueOf(count), textPaint1, canvas.getWidth()-1020, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+                canvas.save();
+                canvas.translate(40, y);
+                textLayout.draw(canvas);
+                canvas.restore();
+
+                textLayout = new StaticLayout(locationDate.getState(), textPaint1, canvas.getWidth()-430, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+                canvas.save();
+                canvas.translate(200, y);
+                textLayout.draw(canvas);
+                canvas.restore();
+
+                textPaint.setTextSize(22f);
+                textLayout = new StaticLayout(locationDate.getLocation(), textPaint, canvas.getWidth()-430, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+                canvas.save();
+                canvas.translate(200, y+25);
+                textLayout.draw(canvas);
+                canvas.restore();
+
+                textLayout  = new StaticLayout(locationDate.getDatetime(), textPaint, canvas.getWidth()-900, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+                canvas.save();
+                canvas.translate(900, y);
+                textLayout.draw(canvas);
+                canvas.restore();
+
+                y = y + canvas.getHeight()-1900;
+                count = count + 1;
+
+                if(y >= PAGE_HEIGHT-10){
+                    pdfDocument.finishPage(myPage1);
+                    myPageInfo1 = new PdfDocument.PageInfo.Builder(PAGE_WIDTH, PAGE_HEIGHT, 1).create();
+                    myPage1 = pdfDocument.startPage(myPageInfo1);
+                    canvas = myPage1.getCanvas();
+                    y = 20;
+                }
+            }
+
             pdfDocument.finishPage(myPage1);
+
 
             File filePath = Environment.getExternalStorageDirectory();
             Date date = new Date();
@@ -893,7 +947,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 pdfDocument.writeTo(new FileOutputStream(file));
                 Toast.makeText(this, "Pdf Saved", Toast.LENGTH_SHORT).show();
             }catch(Exception e){
-                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
             }
 
 

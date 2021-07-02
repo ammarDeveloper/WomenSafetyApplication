@@ -36,6 +36,7 @@ public class List_of_locations_adapter extends RecyclerView.Adapter<List_of_loca
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.list_of_locations_city_name.setText(locationDateslists.get(position).getState());
         holder.list_of_locations_address.setText(locationDateslists.get(position).getLocation());
         holder.list_of_locations_date_time.setText(locationDateslists.get(position).getDatetime());
 
@@ -51,8 +52,8 @@ public class List_of_locations_adapter extends RecyclerView.Adapter<List_of_loca
             @Override
             public void onClick(View v) {
                 long clicketime = System.currentTimeMillis();
-                if (clicketime - lastclicktime[0] < 300){
-                    LocationDate locationDate = new LocationDate(locationDateslists.get(position).getLocation_id(), locationDateslists.get(position).getLocation(), locationDateslists.get(position).getDatetime());
+                if (clicketime - lastclicktime[0] < 250){
+                    LocationDate locationDate = new LocationDate(locationDateslists.get(position).getLocation_id(),locationDateslists.get(position).getState(),  locationDateslists.get(position).getLocation(), locationDateslists.get(position).getDatetime());
                     DataBaseHolder dataBaseHolder = new DataBaseHolder(mContext);
                     dataBaseHolder.deleteUsersLocations(locationDate);
                     locationDateslists.remove(position);
@@ -85,11 +86,12 @@ public class List_of_locations_adapter extends RecyclerView.Adapter<List_of_loca
     // view holder class
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView list_of_locations_address, list_of_locations_date_time;
+        private TextView list_of_locations_city_name, list_of_locations_address, list_of_locations_date_time;
         private RelativeLayout card_of_saved_locations;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             card_of_saved_locations = itemView.findViewById(R.id.card_of_saved_locations);
+            list_of_locations_city_name = itemView.findViewById(R.id.list_of_locations_city_name);
             list_of_locations_address = itemView.findViewById(R.id.list_of_locations_address);
             list_of_locations_date_time = itemView.findViewById(R.id.list_of_locations_date_time);
         }

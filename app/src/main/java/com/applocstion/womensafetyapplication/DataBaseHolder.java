@@ -30,6 +30,7 @@ public class DataBaseHolder extends SQLiteOpenHelper {
     // Static variables Required to store in locationsdate table
     private static final String LOCATIONS_TABLE = "LOCATIONS_TABLE";
     private static final String LOCATION_ID = "LOCATION_ID";
+    private static final String STATE = "STATE";
     private static final String LOCATION = "LOCATION";
     private static final String DATE = "DATE";
 
@@ -44,7 +45,7 @@ public class DataBaseHolder extends SQLiteOpenHelper {
         String createTableStatement1 = "CREATE TABLE " + PERSON_TABLE + " (" + PERSON_ID + "  INTEGER PRIMARY KEY AUTOINCREMENT, " + PERSON_NAME + " TEXT, " + PHONE_NUMBERS + " LIST)";
         db.execSQL(createTableStatement1);
 
-        String createTableStatement2 = "CREATE TABLE " + LOCATIONS_TABLE + " (" + LOCATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + LOCATION + " TEXT, " + DATE + " TEXT)";
+        String createTableStatement2 = "CREATE TABLE " + LOCATIONS_TABLE + " (" + LOCATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + STATE + " TEXT, "+ LOCATION + " TEXT, " + DATE + " TEXT)";
         db.execSQL(createTableStatement2);
     }
 
@@ -120,10 +121,9 @@ public class DataBaseHolder extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
+        cv.put(STATE, locationDate.getState());
         cv.put(LOCATION, locationDate.getLocation());
-        System.out.println(locationDate.getLocation());
         cv.put(DATE, locationDate.getDatetime());
-        System.out.println(locationDate.getDatetime());
 
         long insert = db.insert(LOCATIONS_TABLE, null, cv);
 
@@ -139,6 +139,7 @@ public class DataBaseHolder extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
+        cv.put(STATE, locationDate.getState());
         cv.put(LOCATION, locationDate.getLocation());
         cv.put(DATE, locationDate.getDatetime());
 
@@ -156,9 +157,10 @@ public class DataBaseHolder extends SQLiteOpenHelper {
         if (cursor.moveToFirst()){
             do{
                 int location_id = cursor.getInt(0);
-                String location = cursor.getString(1);
-                String datetime = cursor.getString(2);
-                LocationDate locationDate = new LocationDate(location_id, location, datetime);
+                String state = cursor.getString(1);
+                String location = cursor.getString(2);
+                String datetime = cursor.getString(3);
+                LocationDate locationDate = new LocationDate(location_id, state,  location, datetime);
                 locationDateArrayList.add(locationDate);
             }while (cursor.moveToNext());
         }

@@ -6,11 +6,13 @@ import java.util.Date;
 public class LocationDate {
 
     private int location_id;
+    private String state;
     private String location;
     private String datetime;
 
-    public LocationDate(int location_id, String location, String datetime) {
+    public LocationDate(int location_id, String state,  String location, String datetime) {
         this.location_id = location_id;
+        this.state = state;
         this.location = location;
         this.datetime = datetime;
     }
@@ -21,6 +23,14 @@ public class LocationDate {
 
     public void setLocation_id(int location_id) {
         this.location_id = location_id;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getLocation() {
