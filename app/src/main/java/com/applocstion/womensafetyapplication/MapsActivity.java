@@ -82,6 +82,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -108,6 +109,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ConstraintLayout parent;
     private EditText cardEditNumber, cardEditName;
     private Bitmap bitmap, scaleBitmap;
+    private double prevLog;
+    private double prevLat;
 
 
     //Location Request is a config file for all Settings related to FusedLocationProvider
@@ -136,22 +139,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Do You Want To Exit?");
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        if(cardExpand.getVisibility() == View.VISIBLE){
+            closeCard();
+        }else if(editing_side_bar.getVisibility() == View.VISIBLE){
+            close_editing_slide_bar();
+            enableBackGround();
+        }else if(my_location_container_card_view.getVisibility() == View.VISIBLE){
+            close_my_loction();
+            enableBackGround();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Do You Want To Exit?");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-            }
-        });
-        builder.create();
-        builder.show();
+                }
+            });
+            builder.create();
+            builder.show();
+        }
     }
 
 
@@ -198,8 +211,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         callBackRelocation();
     }
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -477,18 +488,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         add_to_saved_location_card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Date date = new Date();
-                datetime = DateFormat.getDateTimeInstance().format(date);
-                LocationDate locationDate = new LocationDate(-1, state,  lineAddress, datetime);
-                Toast.makeText(MapsActivity.this, state, Toast.LENGTH_SHORT).show();
-                DataBaseHolder dataBaseHolder = new DataBaseHolder(MapsActivity.this);
-                boolean A = dataBaseHolder.addUsersLocations(locationDate);
-                if (A){
-                    Toast.makeText(MapsActivity.this, "Location Added", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MapsActivity.this, "Something Went Wrong, Try Again", Toast.LENGTH_SHORT).show();
-                }
-
+                addLocations();
             }
         });
 
@@ -597,6 +597,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             lat = location.getLatitude();
             UIElements();
             checkNetwork();
+            DataBaseHolder dataBaseHolder = new DataBaseHolder(MapsActivity.this);
+            ArrayList<LocationDate> listLoactionDate = new ArrayList<>();
+            listLoactionDate = dataBaseHolder.getUsersLocations();
+
+
             Transition transition = new Slide(Gravity.TOP);
             transition.setDuration(600);
             transition.addTarget(R.id.errorMessageCard);
@@ -611,6 +616,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 ArrayList<Address> addresses = (ArrayList<Address>) geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                 lineAddress = addresses.get(0).getAddressLine(0);
                 state = addresses.get(0).getLocality();
+                if(listLoactionDate.isEmpty()){
+                    addLocations();
+                } else{
+                    if(distanceCalculate(prevLat, prevLog, lat, log) > 1){
+                        addLocations();
+                    }
+                }
+                prevLog = log;
+                prevLat = lat;
             } catch (Exception e) {
                 lineAddress = String.valueOf(location.getLatitude()) + String.valueOf(location.getLongitude());
             }
@@ -782,6 +796,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         relocateCardBtn.setEnabled(true);
         list_of_settings.setEnabled(true);
         send_WA_message_card.setEnabled(true);
+        send_location_pdf_btn.setEnabled(true);
     }
 
     // disabling the buttons
@@ -792,6 +807,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         relocateCardBtn.setEnabled(false);
         list_of_settings.setEnabled(false);
         send_WA_message_card.setEnabled(false);
+        send_location_pdf_btn.setEnabled(false);
     }
 
     // show my location
@@ -890,11 +906,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             canvas.drawLine(880, 486, 880, 546, myPaint);
 
             ArrayList<LocationDate> listoflocationDate = dataBaseHolder.getUsersLocations();
+            Collections.reverse(listoflocationDate);
             int count = 1;
             int y = 576;
             for (LocationDate locationDate:listoflocationDate){
-                // todo : a proper text to dispay in pdf
-
                 textPaint1.setTextSize(22f);
                 textPaint1.setTypeface(Typeface.DEFAULT_BOLD);
                 StaticLayout textLayout = new StaticLayout(String.valueOf(count), textPaint1, canvas.getWidth()-1020, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
@@ -965,7 +980,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     whatsappintent.putExtra(Intent.EXTRA_STREAM, uri);
                     whatsappintent.setType("application/pdf");
                     startActivity(whatsappintent);
-                    Toast.makeText(this, "message sent", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(this, "WhatsApp is not installed", Toast.LENGTH_SHORT).show();
                 }
@@ -973,5 +987,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Toast.makeText(this, "no such file", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    // adding the location
+    public void addLocations(){
+        Date date = new Date();
+        datetime = DateFormat.getDateTimeInstance().format(date);
+        LocationDate locationDate = new LocationDate(-1, state,  lineAddress, datetime);
+        DataBaseHolder dataBaseHolder = new DataBaseHolder(MapsActivity.this);
+        boolean A = dataBaseHolder.addUsersLocations(locationDate);
+        if (A){
+            Toast.makeText(MapsActivity.this, "Location Added", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(MapsActivity.this, "Something Went Wrong, Try Again", Toast.LENGTH_SHORT).show();
+        }
+
+        if(dataBaseHolder.getUsersLocations().size() >= 101){
+            // todo: delete last location if range is reached
+            ArrayList<LocationDate> locationDateslists = new ArrayList<>();
+            locationDateslists = dataBaseHolder.getUsersLocations();
+            LocationDate locationDatetormove = new LocationDate(locationDateslists.get(0).getLocation_id(),locationDateslists.get(0).getState(),  locationDateslists.get(0).getLocation(), locationDateslists.get(9).getDatetime());
+            dataBaseHolder.deleteUsersLocations(locationDatetormove);
+        }
+    }
+
+    // calculate the distance
+    public double distanceCalculate(double lat1, double log1, double lat2, double log2){
+        lat1 = Math.toRadians(lat1);
+        log1 = Math.toRadians(log1);
+        lat2 = Math.toRadians(lat2);
+        log2 = Math.toRadians(log2);
+
+        double dlon = log2 - log1;
+        double dlat = lat2 - lat1;
+        double a = Math.pow(Math.sin(dlat / 2), 2)
+                + Math.cos(lat1) * Math.cos(lat2)
+                * Math.pow(Math.sin(dlon / 2),2);
+
+        double c = 2 * Math.asin(Math.sqrt(a));
+
+        double r = 6371;
+        return (c*r);
     }
 }

@@ -22,6 +22,7 @@ public class List_of_locations_adapter extends RecyclerView.Adapter<List_of_loca
     private Context mContext;
     private ArrayList<LocationDate> locationDateslists;
 
+
     // Constructor
     public List_of_locations_adapter(Context mContext) {
         this.mContext = mContext;
@@ -52,7 +53,7 @@ public class List_of_locations_adapter extends RecyclerView.Adapter<List_of_loca
             @Override
             public void onClick(View v) {
                 long clicketime = System.currentTimeMillis();
-                if (clicketime - lastclicktime[0] < 250){
+                if (clicketime - lastclicktime[0] < 200){
                     LocationDate locationDate = new LocationDate(locationDateslists.get(position).getLocation_id(),locationDateslists.get(position).getState(),  locationDateslists.get(position).getLocation(), locationDateslists.get(position).getDatetime());
                     DataBaseHolder dataBaseHolder = new DataBaseHolder(mContext);
                     dataBaseHolder.deleteUsersLocations(locationDate);
